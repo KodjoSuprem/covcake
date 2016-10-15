@@ -1,0 +1,18 @@
+﻿Bonjour  #DISPLAYNAME#,
+
+Vous avez demandé à changer d'adresse email pour votre compte CoVoyage.
+
+Cette adresse servira également d'identifiant pour accéder à votre compte.
+
+--------------------------------
+Email/Identifiant:     #NEWEMAIL#
+--------------------------------
+
+Pour valider votre nouvelle adresse cliquez sur le lien suivant:
+#ACTIVATIONURL#
+
+Cordialement,
+L'équipe de CoVoyage.net
+
+--
+**Ceci est un email automatique, veuillez ne pas y répondre**

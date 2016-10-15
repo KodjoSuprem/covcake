@@ -1,0 +1,22 @@
+﻿Bonjour  #DISPLAYNAME#,
+
+Vous avez demandé à réinitialiser votre mot de passe.
+
+Si vous n'êtes pas à l'origine de cette demande, ignorez simplement ce message.
+
+Voici les nouvelles informations concernant votre compte:
+
+----------------------------
+Email/Nom d'utilisateur: #EMAIL#
+Mot de passe:            #PASSWORD#
+----------------------------
+
+Vous pouvez desormais changer ce mot de passe en vous rendant sur le site.
+
+A bientôt sur #WEBSITEURL#.
+
+Cordialement.
+
+--
+L'équipe de CoVoyage.net
+**Ceci est un email automatique, veuillez ne pas y répondre**

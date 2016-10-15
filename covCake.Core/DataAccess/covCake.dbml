@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="DBcov" Class="covCakeDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.ref_Pays" Member="ref_Pays">
+    <Type Name="ref_Pays">
+      <Column Name="IdPays" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LibellePays" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LibelleEngPays" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CodePays" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="CodePays2" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="CapitalePays" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Association Name="ref_Pays_cov_Alerte" Member="cov_Alertes" ThisKey="IdPays" OtherKey="IdPays" Type="cov_Alerte" />
+      <Association Name="ref_Pays_cov_Projet" Member="cov_Projets" ThisKey="IdPays" OtherKey="IdPaysArrive" Type="cov_Projet" />
+      <Association Name="ref_Pays_cov_Projet1" Member="cov_Projets1" ThisKey="IdPays" OtherKey="IdPaysDepart" Type="cov_Projet" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_AbonnementProjet" Member="cov_AbonnementProjets">
+    <Type Name="cov_AbonnementProjet">
+      <Column Name="IdProjet" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DateAbonnement" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="cov_Projet_cov_AbonnementProjet" Member="cov_Projet" ThisKey="IdProjet" OtherKey="IdProjet" Type="cov_Projet" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="cov_UserProfile_cov_AbonnementProjet" Member="cov_UserProfile" ThisKey="UserId" OtherKey="UserId" Type="cov_UserProfile" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_Album" Member="cov_Albums">
+    <Type Name="cov_Album">
+      <Column Name="AlbumId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NomAlbum" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DateCreation" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="cov_Album_cov_Photo" Member="cov_Photos" ThisKey="AlbumId" OtherKey="AlbumId" Type="cov_Photo" />
+      <Association Name="cov_Album_cov_UserAlbum" Member="cov_UserAlbums" ThisKey="AlbumId" OtherKey="AlbumId" Type="cov_UserAlbum" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_Photo" Member="cov_Photos">
+    <Type Name="cov_Photo">
+      <Column Name="PhotoId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AlbumId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="FilePath" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ThumbPath" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="DateCreation" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="cov_Album_cov_Photo" Member="cov_Album" ThisKey="AlbumId" OtherKey="AlbumId" Type="cov_Album" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_Residence" Member="cov_Residences">
+    <Type Name="cov_Residence">
+      <Column Name="IdResidence" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TypeResidence" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AdresseResidence" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Prix" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="MaxHotes" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="cov_Residence_cov_Projet" Member="cov_Projets" ThisKey="IdResidence" OtherKey="IdResidence" Type="cov_Projet" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_UserAlbum" Member="cov_UserAlbums">
+    <Type Name="cov_UserAlbum">
+      <Column Name="AlbumId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="cov_Album_cov_UserAlbum" Member="cov_Album" ThisKey="AlbumId" OtherKey="AlbumId" Type="cov_Album" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="cov_UserProfile_cov_UserAlbum" Member="cov_UserProfile" ThisKey="UserId" OtherKey="UserId" Type="cov_UserProfile" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ref_Departements" Member="ref_Departements">
+    <Type Name="ref_Departement">
+      <Column Name="NumDept" Type="System.String" DbType="VarChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NumRegion" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="NomDept" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="ref_Departement_cov_UserProfile" Member="cov_UserProfiles" ThisKey="NumDept" OtherKey="NumDept" Type="cov_UserProfile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Users" Member="aspnet_Users">
+    <Type Name="aspnet_User">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredUserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileAlias" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="IsAnonymous" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_Membership" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Membership" Cardinality="One" />
+      <Association Name="aspnet_User_cov_UserProfile" Member="cov_UserProfile" ThisKey="UserId" OtherKey="UserId" Type="cov_UserProfile" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Membership" Member="aspnet_Memberships">
+    <Type Name="aspnet_Membership">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordFormat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordSalt" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePIN" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="LoweredEmail" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordQuestion" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordAnswer" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLockedOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastPasswordChangedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLockoutDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_Alerte" Member="cov_Alertes">
+    <Type Name="cov_Alerte">
+      <Column Name="IdAlerte" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="IdPays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VilleArrive" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="NbJours" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateDebutProjet" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PeriodeDebut" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PeriodeFin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateCreation" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateDernierEnvoi" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ref_Pays_cov_Alerte" Member="ref_Pays" ThisKey="IdPays" OtherKey="IdPays" Type="ref_Pays" IsForeignKey="true" />
+      <Association Name="cov_UserProfile_cov_Alerte" Member="cov_UserProfile" ThisKey="UserId" OtherKey="UserId" Type="cov_UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_Projet" Member="cov_Projets">
+    <Type Name="cov_Projet">
+      <Column Name="IdProjet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdPaysDepart" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPaysArrive" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VilleDepart" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="VilleArrive" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="DateDebut" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateFin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Incertain" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NbJours" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Commentaire" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Realise" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IdResidence" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdTransport" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OwnerUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Visites" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreation" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateModification" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="cov_Projet_cov_AbonnementProjet" Member="cov_AbonnementProjets" ThisKey="IdProjet" OtherKey="IdProjet" Type="cov_AbonnementProjet" />
+      <Association Name="cov_Projet_cov_Transport" Member="cov_Transports" ThisKey="IdProjet" OtherKey="IdProjet" Type="cov_Transport" />
+      <Association Name="cov_Projet_cov_MessagePrive" Member="cov_MessagePrives" ThisKey="IdProjet" OtherKey="IdProjet" Type="cov_MessagePrive" />
+      <Association Name="cov_Residence_cov_Projet" Member="cov_Residence" ThisKey="IdResidence" OtherKey="IdResidence" Type="cov_Residence" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Association Name="ref_Pays_cov_Projet" Member="ref_Pays" ThisKey="IdPaysArrive" OtherKey="IdPays" Type="ref_Pays" IsForeignKey="true" />
+      <Association Name="ref_Pays_cov_Projet1" Member="ref_Pays1" ThisKey="IdPaysDepart" OtherKey="IdPays" Type="ref_Pays" IsForeignKey="true" />
+      <Association Name="cov_UserProfile_cov_Projet" Member="cov_UserProfile" ThisKey="OwnerUserId" OtherKey="UserId" Type="cov_UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_Transport" Member="cov_Transports">
+    <Type Name="cov_Transport">
+      <Column Name="IdTransport" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdProjet" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Compagnie" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NumVol" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PrixAR" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Details" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="cov_Projet_cov_Transport" Member="cov_Projet" ThisKey="IdProjet" OtherKey="IdProjet" Type="cov_Projet" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_UserProfile" Member="cov_UserProfiles">
+    <Type Name="cov_UserProfile">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Prenom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sexe" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Ville" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NumDept" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="DateNaiss" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="PublicMail" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SelfDesc" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ImagePersoPath" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ActivationKey" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="cov_UserProfile_cov_AbonnementProjet" Member="cov_AbonnementProjets" ThisKey="UserId" OtherKey="UserId" Type="cov_AbonnementProjet" />
+      <Association Name="cov_UserProfile_cov_UserAlbum" Member="cov_UserAlbums" ThisKey="UserId" OtherKey="UserId" Type="cov_UserAlbum" />
+      <Association Name="cov_UserProfile_cov_Alerte" Member="cov_Alertes" ThisKey="UserId" OtherKey="UserId" Type="cov_Alerte" />
+      <Association Name="cov_UserProfile_cov_Projet" Member="cov_Projets" ThisKey="UserId" OtherKey="OwnerUserId" Type="cov_Projet" />
+      <Association Name="cov_UserProfile_cov_MessagePrive" Member="cov_MessagePrives" ThisKey="UserId" OtherKey="FromUserId" Type="cov_MessagePrive" />
+      <Association Name="cov_UserProfile_cov_MessagePrive1" Member="cov_MessagePrives1" ThisKey="UserId" OtherKey="ToUserId" Type="cov_MessagePrive" />
+      <Association Name="aspnet_User_cov_UserProfile" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="ref_Departement_cov_UserProfile" Member="ref_Departement" ThisKey="NumDept" OtherKey="NumDept" Type="ref_Departement" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cov_MessagePrive" Member="cov_MessagePrives">
+    <Type Name="cov_MessagePrive">
+      <Column Name="MsgId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TypeMessage" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="FromUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ToUserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DateMessage" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Ip" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="IsFromNewMessage" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsToNewMessage" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="IdProjet" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MsgResponseId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IToUserDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IFromUserDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OToUserDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OFromUserDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="cov_MessagePrive_cov_MessagePrive" Member="cov_MessagePrives" ThisKey="MsgId" OtherKey="MsgResponseId" Type="cov_MessagePrive" />
+      <Association Name="cov_UserProfile_cov_MessagePrive" Member="cov_UserProfile" ThisKey="FromUserId" OtherKey="UserId" Type="cov_UserProfile" IsForeignKey="true" />
+      <Association Name="cov_UserProfile_cov_MessagePrive1" Member="cov_UserProfile1" ThisKey="ToUserId" OtherKey="UserId" Type="cov_UserProfile" IsForeignKey="true" />
+      <Association Name="cov_MessagePrive_cov_MessagePrive" Member="cov_MessagePrive1" ThisKey="MsgResponseId" OtherKey="MsgId" Type="cov_MessagePrive" IsForeignKey="true" />
+      <Association Name="cov_Projet_cov_MessagePrive" Member="cov_Projet" ThisKey="IdProjet" OtherKey="IdProjet" Type="cov_Projet" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+</Database>

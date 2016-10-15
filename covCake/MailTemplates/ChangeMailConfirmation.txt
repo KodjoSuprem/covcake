@@ -1,0 +1,15 @@
+﻿Bonjour  #DISPLAYNAME#,
+
+Votre adresse email a bien été changée.
+
+Vous pouvez desormais utiliser cette nouvelle adresse pour vous connecter.
+
+--------------------------------
+Email/Identifiant:     #NEWEMAIL#
+--------------------------------
+
+Cordialement,
+L'équipe de CoVoyage.net
+
+--
+**Ceci est un email automatique, veuillez ne pas y répondre**

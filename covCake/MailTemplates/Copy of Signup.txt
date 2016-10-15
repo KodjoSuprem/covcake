@@ -1,0 +1,32 @@
+﻿<html>
+<head>
+<title>#TITLE#</title>
+</head>
+<body>
+Bonjour  #DISPLAYNAME#,<br/><br/>
+
+Merci de vous être inscrit sur Covoyage !
+Voici les informations concernant votre compte:
+<br/>
+----------------------------<br/>
+Email/Identifiant: #EMAIL#<br/>
+Mot de passe:            #PASSWORD#<br/>
+----------------------------<br/>
+<br/>
+
+Veuillez confirmer votre adresse email en cliquant sur le lien suivant :
+<br/>
+<a href="#ACTIVATIONURL#">#ACTIVATIONURL#</a>
+<br/>
+<br/>
+Ou copiez l'adresse qui suit dans votre navigateur :
+<br/> 
+#ACTIVATIONURL#
+<br/>
+<br/>
+Cordialement,<br/>
+L'&eacute;quipe de CoVoyage.net<br/>
+
+**Ceci est un email automatique, veuillez ne pas y r&eacute;pondre**
+</body>
+</html>

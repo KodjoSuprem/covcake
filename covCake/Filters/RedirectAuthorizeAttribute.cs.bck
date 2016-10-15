@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Configuration;
+using covCake.Controllers;
+
+namespace covCake
+{
+  [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
+  public class RedirectAuthorizeAttribute : ActionFilterAttribute 
+  {
+
+       public override void OnActionExecuting(ActionExecutingContext filterContext)
+           {
+               if(filterContext.Controller is BaseController)
+               {
+                   var baseController = filterContext.Controller as BaseController;
+                   if (baseController != null)
+                   {
+                       if (!baseController.User.Identity.IsAuthenticated)
+                       {
+                           Uri requestedUrl = filterContext.HttpContext.Request.Url;
+
+                           //TODO: Pour les modal boxes renvoyer juste une partial. if (fb) new {fb=true}
+                           //chemin relatif pr la sécurité
+                           string relativeUri = requestedUrl.PathAndQuery;
+
+                          
+
+                           filterContext.Result = baseController.RedirectToAction("Login", "Account", new { returnUrl = relativeUri });
+                          
+                       }
+                   }
+               }
+               base.OnActionExecuting(filterContext);
+           }
+       }
+
+  
+}

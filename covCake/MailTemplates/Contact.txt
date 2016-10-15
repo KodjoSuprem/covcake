@@ -1,0 +1,13 @@
+﻿Envoyé le : #DATETIME#
+Par       : #NAME# #EMAIL# (#IPADDRESS#)
+Object    : #SUBJECT#
+--------------
+
+   #MESSAGE#
+
+--------------
+Message envoyé à partir du formulaire de contact.
+
+CoVoyage.net
+
+

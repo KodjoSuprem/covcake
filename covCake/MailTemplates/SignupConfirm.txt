@@ -1,0 +1,18 @@
+﻿Bonjour  #DISPLAYNAME#,
+
+Merci de vous être inscrit sur CoVoyage.net !
+Voici les informations concernant votre compte:
+
+--------------------
+Email/Identifiant:     #EMAIL#
+Mot de passe:          #PASSWORD#
+--------------------
+
+Vous pouvez dès à présent proposer un nouveau voyage ou rejoindre un groupe.
+
+A bientôt sur http://www.covoyage.net
+
+L'équipe de CoVoyage.net
+
+--
+**Ceci est un email automatique, veuillez ne pas y répondre**

@@ -1,0 +1,854 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0043)http://malsup.com/jquery/form/#code-samples -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<TITLE>jQuery Form Plugin</TITLE>
+<LINK rel="stylesheet" type="text/css" media="screen" href="./http   malsup.com jquery form #code-samples.htm_files/jq.css">
+<LINK rel="stylesheet" type="text/css" media="screen" href="./http   malsup.com jquery form #code-samples.htm_files/form.css">
+<SCRIPT type="text/javascript" src="./http   malsup.com jquery form #code-samples.htm_files/jquery-1.2.6.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./http   malsup.com jquery form #code-samples.htm_files/jquery.tabs.pack.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./http   malsup.com jquery form #code-samples.htm_files/jquery.history.pack.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./http   malsup.com jquery form #code-samples.htm_files/jquery.form.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="./http   malsup.com jquery form #code-samples.htm_files/chili-1.7.pack.js"></SCRIPT>
+<SCRIPT type="text/javascript"><!--
+$().ajaxError(function(ev,xhr,o,err) {
+    alert(err);
+    if (window.console && window.console.log) console.log(err);
+});
+$(function() {
+    // initialize the tabs
+    var tab = location.hash == '#options-object' ? 2 : 1;
+    var main = $('#main').tabs(tab);
+    $('#samples').tabs( { selectedClass: 'sample-tab-selected', bookmarkable: false });
+
+    var options1 = {
+        target:        '#output1',   // target element to update
+        beforeSubmit:  showRequest,  // pre-submit callback
+        success:       showResponse  // post-submit callback
+    };
+
+    // bind form1 using 'ajaxForm'
+    $('#myForm1').ajaxForm(options1);
+
+    var options2 = {
+        target:        '#output2',   // target element to update
+        beforeSubmit:  showRequest,  // pre-submit callback
+        success:       showResponse  // post-submit callback
+    };
+
+    // bind form2 using ajaxSubmit
+    $('#myForm2').submit(function() {
+        // submit the form via ajax
+        $(this).ajaxSubmit(options2);
+        return false;
+    });
+
+    $('#test').submit(function() {
+        return false;
+    });
+
+    $('#inputForm').submit(function() {
+        var query = $('#query').val();
+        showIt(query);
+        return false;
+    });
+
+    $('<div id="busy">Loading...</div>')
+        .ajaxStart(function() {$(this).show();})
+        .ajaxStop(function() {$(this).hide();})
+        .appendTo('#main');
+
+    $('#jsonForm').ajaxForm({
+        dataType: 'json',
+        success:  processJson
+    });
+
+    $('#validateForm1').ajaxForm({ beforeSubmit: validate1 });
+    $('#validateForm2').ajaxForm({ beforeSubmit: validate2 });
+    $('#validateForm3').ajaxForm({ beforeSubmit: validate3 });
+
+    $('#xmlForm').ajaxForm({
+        // dataType identifies the expected content type of the server response
+        dataType:  'xml',
+
+        // success identifies the function to invoke when the server response
+        // has been received
+        success:   processXml
+    });
+
+    $('#htmlForm').ajaxForm({
+        // target identifies the element(s) to update with the server response
+        target: '#htmlExampleTarget',
+        success: function() {
+            $('#htmlExampleTarget').fadeIn('slow');
+        }
+    });
+
+    $('#uploadForm').ajaxForm({
+        beforeSubmit: function(a,f,o) {
+            o.dataType = $('#uploadResponseType')[0].value;
+            $('#uploadOutput').html('Submitting...');
+        },
+        success: function(data) {
+            var $out = $('#uploadOutput');
+            $out.html('Form success handler received: <strong>' + typeof data + '</strong>');
+            if (typeof data == 'object' && data.nodeType)
+                data = elementToString(data.documentElement, true);
+            else if (typeof data == 'object')
+                data = objToString(data);
+            $out.append('<div><pre>'+ data +'</pre></div>');
+        }
+    });
+});
+
+
+// pre-submit callback
+function showRequest(formData, jqForm) {
+    alert('About to submit: \n\n' + $.param(formData));
+    return true;
+}
+
+// post-submit callback
+function showResponse(responseText, statusText)  {
+    alert('this: ' + this.tagName +
+        '\nstatus: ' + statusText +
+        '\n\nresponseText: \n' +
+        responseText + '\n\nThe output div should have already been updated with the responseText.');
+}
+
+function showIt(query) {
+    var successful = $('#successful')[0].checked;
+    var val = $(query, '#test').fieldValue(successful);
+    var ser = $(query, '#test').fieldSerialize(successful);
+    alert('$("'+query+'").fieldValue(): ' + val + '\n\n$("'+query+'").fieldSerialize(): ' + ser);
+}
+
+function validate1(formData, jqForm, options) {
+    for (var i=0; i < formData.length; i++) {
+        if (!formData[i].value) {
+            alert('Please enter a value for both Username and Password');
+            return false;
+        }
+    }
+    alert('Both fields contain values.');
+}
+
+function validate2(formData, jqForm, options) {
+    var form = jqForm[0];
+    if (!form.username.value || !form.password.value) {
+        alert('Please enter a value for both Username and Password');
+        return false;
+    }
+    alert('Both fields contain values.');
+}
+
+function validate3(formData, jqForm, options) {
+    var usernameValue = $('#validateForm3 input[@name=username]').fieldValue();
+    var passwordValue = $('#validateForm3 input[@name=password]').fieldValue();
+
+    if (!usernameValue[0] || !passwordValue[0]) {
+        alert('Please enter a value for both Username and Password');
+        return false;
+    }
+    alert('Both fields contain values.');
+}
+
+function processJson(data) {
+    alert(data.message);
+}
+
+function processXml(responseXML) {
+    var message = $('message', responseXML).text();
+    alert(message);
+}
+
+// helper
+function objToString(o) {
+    var s = '{\n';
+    for (var p in o)
+        s += '    ' + p + ': ' + o[p] + '\n';
+    return s + '}';
+}
+
+// helper
+function elementToString(n, useRefs) {
+    var attr = "", nest = "", a = n.attributes;
+    for (var i=0; a && i < a.length; i++)
+        attr += ' ' + a[i].nodeName + '="' + a[i].nodeValue + '"';
+
+    if (n.hasChildNodes == false)
+        return "<" + n.nodeName + "\/>";
+
+    for (var i=0; i < n.childNodes.length; i++) {
+        var c = n.childNodes.item(i);
+        if (c.nodeType == 1)       nest += elementToString(c);
+        else if (c.nodeType == 2)  attr += " " + c.nodeName + "=\"" + c.nodeValue + "\" ";
+        else if (c.nodeType == 3)  nest += c.nodeValue;
+    }
+    var s = "<" + n.nodeName + attr + ">" + nest + "<\/" + n.nodeName + ">";
+    return useRefs ? s.replace(/</g,'&lt;').replace(/>/g,'&gt;') : s;
+};
+
+// -->
+</SCRIPT>
+</HEAD><BODY><DIV><A id="logo" href="http://jquery.com/" title="Powered By jQuery"></A></DIV>
+<H1 id="banner"><A id="backnav" href="http://malsup.com/jquery/">&lsaquo;&lsaquo; home</A>jQuery Form Plugin</H1>
+<DIV id="main">
+    <UL id="nav" class="anchors">
+    <LI class=""><A href="http://malsup.com/jquery/form/#getting-started">Getting Started</A></LI>
+    <LI class=""><A href="http://malsup.com/jquery/form/#api">API</A></LI>
+    <LI class="tabs-selected"><A href="./http   malsup.com jquery form #code-samples.htm_files/http   malsup.com jquery form #code-samples.htm.com jquery form #code-samples">Code Samples</A></LI>
+    <LI class=""><A href="http://malsup.com/jquery/form/#fields">Working With Fields</A></LI>
+    <LI class=""><A href="http://malsup.com/jquery/form/#faq">FAQ</A></LI>
+    <LI class=""><A href="http://malsup.com/jquery/form/#download">Download &amp; Support</A></LI>
+    </UL>
+    <DIV id="getting-started" class="tabContent tabs-hide">
+        <H1>Overview</H1>
+        The jQuery Form Plugin allows you to easily and unobtrusively upgrade HTML forms to use
+        <ABBR title="Asynchronous JavaScript and XML">AJAX</ABBR>.
+        The main methods,
+        <CODE class="inline">ajaxForm</CODE> and <CODE class="inline">ajaxSubmit</CODE>,
+        gather information from the form element to determine how to manage the submit process.  Both of these methods support
+        numerous options which allows you to have full control over how the data is submitted.  Submitting a form
+        with AJAX doesn&#39;t get any easier than this!
+
+        <H1>Quick Start Guide</H1>
+        <DIV class="step-one">Add a form to your page. Just a normal form, no special markup required:</DIV>
+        <PRE><CODE class="mix"><SPAN class="tag">&lt;form</SPAN><SPAN class="aname">&nbsp;id</SPAN>=<SPAN class="string">&quot;myForm&quot;</SPAN><SPAN class="aname">&nbsp;action</SPAN>=<SPAN class="string">&quot;comment.php&quot;</SPAN><SPAN class="aname">&nbsp;method</SPAN>=<SPAN class="string">&quot;post&quot;</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Name:&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text&quot;</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;name&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Comment:&nbsp;<SPAN class="tag">&lt;textarea</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;comment&quot;</SPAN><SPAN class="tag">&gt;</SPAN><SPAN class="tag">&lt;/textarea&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;submit&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Submit&nbsp;Comment&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR><SPAN class="tag">&lt;/form&gt;</SPAN></CODE></PRE>
+
+        <DIV class="step-two">Include the jQuery and Form Plugin external script files and a short script to
+        initialize the form when the <ABBR title="Document Object Model">DOM</ABBR> is ready:</DIV>
+        <PRE><CODE class="mix"><SPAN class="tag">&lt;head</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;script</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text/javascript&quot;</SPAN><SPAN class="aname">&nbsp;src</SPAN>=<SPAN class="string">&quot;path/to/jquery.js&quot;</SPAN><SPAN class="tag">&gt;</SPAN><SPAN class="tag">&lt;/script&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;script</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text/javascript&quot;</SPAN><SPAN class="aname">&nbsp;src</SPAN>=<SPAN class="string">&quot;path/to/form.js&quot;</SPAN><SPAN class="tag">&gt;</SPAN><SPAN class="tag">&lt;/script&gt;</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;script</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text/javascript&quot;</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;wait&nbsp;for&nbsp;the&nbsp;DOM&nbsp;to&nbsp;be&nbsp;loaded</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;&#39;myForm&#39;&nbsp;and&nbsp;provide&nbsp;a&nbsp;simple&nbsp;callback&nbsp;function</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&quot;Thank&nbsp;you&nbsp;for&nbsp;your&nbsp;comment!&quot;</SPAN>);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;/script&gt;</SPAN>&nbsp;<BR><SPAN class="tag">&lt;/head&gt;</SPAN></CODE></PRE>
+
+    <STRONG>That&#39;s it!</STRONG>  When this form is submitted the <EM>name</EM> and <EM>comment</EM> fields
+    will be posted to <EM>comment.php</EM>.  If the server returns
+    a success status then the user will see a &quot;Thank you&quot; message.
+    <P>
+    </P></DIV>
+
+    <DIV id="api" class="tabContent tabs-hide">
+        <H1>Form Plugin API</H1>
+        The Form Plugin API provides several methods that allow you to easily manage form data and form submission.
+        <DL>
+        <DT><CODE class="method">ajaxForm</CODE></DT>
+        <DD>Prepares a form to be submitted via <ABBR title="Asynchronous JavaScript and XML">AJAX</ABBR>
+        by adding all of the necessary event listeners.  It does <STRONG>not</STRONG> submit the form.
+        Use <CODE class="inline">ajaxForm</CODE> in your document&#39;s <CODE class="inline">ready</CODE> function to
+        prepare your form(s) for AJAX submission.  <CODE class="inline">ajaxForm</CODE> takes zero or one argument.  The single argument
+        can be either a callback function or an <A href="http://malsup.com/jquery/form/#options-object">Options Object</A>.<BR>
+        Chainable: Yes.
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>();</CODE></PRE>
+        </DD>
+        <DT><CODE class="method">ajaxSubmit</CODE></DT>
+        <DD>Immediately submits the form via AJAX.  In the most common use case this is invoked in response to the user submitting the form.
+        <CODE class="inline">ajaxSubmit</CODE> takes zero or one argument.  The single argument
+        can be either a callback function or an <A href="http://malsup.com/jquery/form/#options-object">Options Object</A>.<BR>
+        Chainable: Yes.
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;attach&nbsp;handler&nbsp;to&nbsp;form&#39;s&nbsp;submit&nbsp;event</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&#39;</SPAN>).submit(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;submit&nbsp;the&nbsp;form</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="keywords">this</SPAN>).<SPAN class="plugin">ajaxSubmit</SPAN>();&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;return&nbsp;false&nbsp;to&nbsp;prevent&nbsp;normal&nbsp;browser&nbsp;submit&nbsp;and&nbsp;page&nbsp;navigation</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">false</SPAN>;&nbsp;<BR>});</CODE></PRE>
+        </DD>
+        <DT><CODE class="method">formSerialize</CODE></DT>
+        <DD>Serializes the form into a query string.  This method will return a string in the format:
+        <CODE class="inline">name1=value1&amp;name2=value2</CODE><BR>
+        Chainable: No, this method returns a String.
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;queryString</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&#39;</SPAN>).<SPAN class="plugin">formSerialize</SPAN>();&nbsp;<BR>&nbsp;<BR><SPAN class="com">//&nbsp;the&nbsp;data&nbsp;could&nbsp;now&nbsp;be&nbsp;submitted&nbsp;using&nbsp;$.get,&nbsp;$.post,&nbsp;$.ajax,&nbsp;etc</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>.post(<SPAN class="string">&#39;myscript.php&#39;</SPAN>,&nbsp;queryString);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</CODE></PRE>
+        </DD>
+        <DT><CODE class="method">fieldSerialize</CODE></DT>
+        <DD>Serializes field elements into a query string.  This is handy when you need to serialize only
+        part of a form. This method will return a string in the format:
+        <CODE class="inline">name1=value1&amp;name2=value2</CODE><BR>
+        Chainable: No, this method returns a String.
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;queryString</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&nbsp;.specialFields&#39;</SPAN>).<SPAN class="plugin">fieldSerialize</SPAN>();</CODE></PRE>
+        </DD>
+        <DT><CODE class="method">fieldValue</CODE></DT>
+        <DD>Returns the value(s) of the element(s) in the matched set in an array.  As of version .91, 
+        this method <STRONG>always</STRONG> returns an array.
+        If no valid value can be determined the
+        array will be empty, otherwise it will contain one or more values.<BR>
+        Chainable: No, this method returns an array.
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;get&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;password&nbsp;input</SPAN>&nbsp;<BR><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;value</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&nbsp;:password&#39;</SPAN>).<SPAN class="plugin">fieldValue</SPAN>();&nbsp;<BR>alert(<SPAN class="string">&#39;The&nbsp;password&nbsp;is:&nbsp;&#39;</SPAN>&nbsp;+&nbsp;value[<SPAN class="numbers">0</SPAN>]);&nbsp;<BR></CODE></PRE>
+        </DD>
+        <DT><CODE class="method">resetForm</CODE></DT>
+        <DD>Resets the form to its original state by invoking the form element&#39;s native
+        <ABBR title="Document Object Model">DOM</ABBR> method.<BR>
+        Chainable: Yes.
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&#39;</SPAN>).<SPAN class="plugin">resetForm</SPAN>();</CODE></PRE>
+        </DD>
+        <DT><CODE class="method">clearForm</CODE></DT>
+        <DD>Clears the form elements.  This method emptys all of the text inputs, password inputs and textarea elements, clears
+        the selection in any select elements, and unchecks all radio and checkbox inputs.<BR>
+        Chainable: Yes.
+        <PRE><CODE class="mix"><SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&#39;</SPAN>).<SPAN class="plugin">clearForm</SPAN>();</CODE></PRE>
+        </DD>
+        <DT><CODE class="method">clearFields</CODE></DT>
+        <DD>Clears field elements.  This is handy when you need to clear only a part of the form.<BR>
+        Chainable: Yes.
+        <PRE><CODE class="mix"><SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myFormId&nbsp;.specialFields&#39;</SPAN>).<SPAN class="plugin">clearFields</SPAN>();</CODE></PRE>
+        </DD>
+        </DL>
+        <A id="options-object" name="options-object"></A>
+        <H1>The Options Object</H1>
+        Both <CODE class="inline">ajaxForm</CODE> and <CODE class="inline">ajaxSubmit</CODE> support
+        numerous options which can be provided using an Options Object.  The Options Object is simply
+        a JavaScript Object that contains properties with values set as follows:
+        <DL class="options">
+        <DT>target</DT>
+        <DD>Identifies the element(s) in the page to be updated with the server response.
+            This value may be specified as a jQuery selection string, a jQuery object,
+            or a DOM element.<BR>
+            Default value: <CODE class="inline">null</CODE>
+        </DD>
+        <DT>url</DT>
+        <DD>URL to which the form data will be submitted.<BR>
+        Default value: value of form&#39;s <CODE class="inline">action</CODE> attribute
+        </DD>
+        <DT>type</DT>
+        <DD>The method in which the form data should be submitted, &#39;GET&#39; or &#39;POST&#39;.<BR>
+            Default value: value of form&#39;s <CODE class="inline">method</CODE> attribute (or &#39;GET&#39; if none found)
+        </DD>
+        <DT>beforeSubmit</DT>
+        <DD>Callback function to be invoked before the form is submitted.
+          The &#39;beforeSubmit&#39; callback can be provided as a hook for running pre-submit logic or for
+          validating the form data.  If the &#39;beforeSubmit&#39; callback returns false then the form will
+          not be submitted. The &#39;beforeSubmit&#39; callback is invoked with three arguments: the form data
+          in array format, the jQuery object for the form, and the Options Object passed into ajaxForm/ajaxSubmit.
+          The array of form data takes the following form:
+         <PRE><CODE class="mix">[&nbsp;{&nbsp;name:&nbsp;<SPAN class="string">&#39;username&#39;</SPAN>,&nbsp;value:&nbsp;<SPAN class="string">&#39;jresig&#39;</SPAN>&nbsp;},&nbsp;{&nbsp;name:&nbsp;<SPAN class="string">&#39;password&#39;</SPAN>,&nbsp;value:&nbsp;<SPAN class="string">&#39;secret&#39;</SPAN>&nbsp;}&nbsp;]</CODE></PRE>
+            Default value: <CODE class="inline">null</CODE>
+        </DD>
+        <DT>success</DT>
+        <DD>Callback function to be invoked after the form has been submitted.
+            If a &#39;success&#39; callback function is provided it is invoked after the response has been returned
+            from the server.  It is passed the responseText or responseXML value (depending on the value of
+            the dataType option).
+            <P>
+            Default value: <CODE class="inline">null</CODE>
+        </P></DD>
+        <DT>dataType</DT>
+        <DD>Expected data type of the response.  One of: null, &#39;xml&#39;, &#39;script&#39;, or &#39;json&#39;.
+        The <CODE class="inline">dataType</CODE> option provides a means for specifying how the server response should be handled.
+        This maps directly to the <CODE class="inline">jQuery.httpData</CODE> method.
+        The following values are supported:
+        <P>
+        <STRONG>&#39;xml&#39;</STRONG>: if dataType == &#39;xml&#39; the server response is treated as XML and the &#39;success&#39;
+                  callback method, if specified, will be passed the responseXML value
+        </P><P>
+        <STRONG>&#39;json&#39;</STRONG>: if dataType == &#39;json&#39; the server response will be evaluted and passed to
+                  the &#39;success&#39; callback, if specified
+        </P><P>
+        <STRONG>&#39;script&#39;</STRONG>: if dataType == &#39;script&#39; the server response is evaluated in the global context
+        </P><P>
+            Default value: <CODE class="inline">null</CODE>
+        </P></DD>
+        <DT>semantic</DT>
+        <DD>Boolean flag indicating whether data must be submitted in strict semantic order (slower). Note that the
+            normal form serialization is done in semantic order with the exception of input elements of <CODE class="inline">type=&quot;image&quot;</CODE>.
+            You should only set the semantic option to true if your server has strict semantic requirements
+            <STRONG>and</STRONG> your form contains an input element of <CODE class="inline">type=&quot;image&quot;</CODE>.<BR>
+            Default value: <CODE class="inline">false</CODE>
+        </DD>
+        <DT>resetForm</DT>
+        <DD>Boolean flag indicating whether the form should be reset if the submit is successful<BR>
+            Default value: <CODE class="inline">null</CODE>
+        </DD>
+        <DT>clearForm</DT>
+        <DD>Boolean flag indicating whether the form should be cleared if the submit is successful<BR>
+            Default value: <CODE class="inline">null</CODE>
+        </DD>
+        <DT>iframe</DT>
+        <DD>Boolean flag indicating whether the form should always target the server response to an iframe.
+            This is useful in conjuction with file uploads.  See the <EM>File Uploads</EM> 
+            documentation on the <A href="./http   malsup.com jquery form #code-samples.htm_files/http   malsup.com jquery form #code-samples.htm.com jquery form #code-samples">Code Samples</A>  page for more info.
+        <BR>
+            Default value: <CODE class="inline">false</CODE>
+        </DD>
+        </DL>
+        <P>Example:
+        </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;Options&nbsp;Object</SPAN>&nbsp;<BR><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;options</SPAN>&nbsp;=&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;target:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">&#39;#divToUpdate&#39;</SPAN>,&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">&#39;comment.php&#39;</SPAN>,&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Thanks&nbsp;for&nbsp;your&nbsp;comment!&#39;</SPAN>);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR>};&nbsp;<BR>&nbsp;<BR><SPAN class="com">//&nbsp;pass&nbsp;options&nbsp;to&nbsp;ajaxForm</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>(options);&nbsp;<BR></CODE></PRE>
+
+    Note that the Options Object can also be used to pass values to jQuery&#39;s
+    <A class="external" href="http://docs.jquery.com/Ajax"><CODE class="inline">$.ajax</CODE></A> method.
+    If you are familiar with the options supported by <CODE class="inline">$.ajax</CODE>
+    you may use them in the Options Object passed to <CODE class="inline">ajaxForm</CODE> and
+    <CODE class="inline">ajaxSubmit</CODE>.
+
+    </DIV>
+
+    <DIV id="code-samples" class="tabContent" style="min-width: 0px; ">
+        <H1>Code Samples</H1>
+
+        <DIV id="samples">
+            <UL class="sampleAnchors">
+                <LI class="sample-tab-selected"><A href="http://malsup.com/jquery/form/#sample1">ajaxForm</A></LI>
+                <LI><A href="http://malsup.com/jquery/form/#sample2">ajaxSubmit</A></LI>
+                <LI><A href="http://malsup.com/jquery/form/#sample3">Validation</A></LI>
+                <LI><A href="http://malsup.com/jquery/form/#sample4">JSON</A></LI>
+                <LI><A href="http://malsup.com/jquery/form/#sample5">XML</A></LI>
+                <LI><A href="http://malsup.com/jquery/form/#sample6">HTML</A></LI>
+                <LI><A href="http://malsup.com/jquery/form/#sample7">File Uploads</A></LI>
+            </UL>
+            <DIV id="sample1" class="sampleTabContent">
+            <P>
+            The following code controls the HTML form beneath it. It uses <CODE class="inline">ajaxForm</CODE>
+                to bind the form and demonstrates how to use pre- and post-submit callbacks.
+                </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;the&nbsp;form&nbsp;when&nbsp;the&nbsp;DOM&nbsp;is&nbsp;ready</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;options</SPAN>&nbsp;=&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">&#39;#output1&#39;</SPAN>,&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;target&nbsp;element(s)&nbsp;to&nbsp;be&nbsp;updated&nbsp;with&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeSubmit:&nbsp;&nbsp;showRequest,&nbsp;&nbsp;<SPAN class="com">//&nbsp;pre-submit&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showResponse&nbsp;&nbsp;<SPAN class="com">//&nbsp;post-submit&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;other&nbsp;available&nbsp;options:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//url:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;override&nbsp;for&nbsp;form&#39;s&nbsp;&#39;action&#39;&nbsp;attribute</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&#39;get&#39;&nbsp;or&nbsp;&#39;post&#39;,&nbsp;override&nbsp;for&nbsp;form&#39;s&nbsp;&#39;method&#39;&nbsp;attribute</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//dataType:&nbsp;&nbsp;null&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&#39;xml&#39;,&nbsp;&#39;script&#39;,&nbsp;or&nbsp;&#39;json&#39;&nbsp;(expected&nbsp;server&nbsp;response&nbsp;type)</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//clearForm:&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;clear&nbsp;all&nbsp;form&nbsp;fields&nbsp;after&nbsp;successful&nbsp;submit</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//resetForm:&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;reset&nbsp;the&nbsp;form&nbsp;after&nbsp;successful&nbsp;submit</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;$.ajax&nbsp;options&nbsp;can&nbsp;be&nbsp;used&nbsp;here&nbsp;too,&nbsp;for&nbsp;example:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//timeout:&nbsp;&nbsp;&nbsp;3000</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;};&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;form&nbsp;using&nbsp;&#39;ajaxForm&#39;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm1&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>(options);&nbsp;<BR>});&nbsp;<BR>&nbsp;<BR><SPAN class="com">//&nbsp;pre-submit&nbsp;callback</SPAN>&nbsp;<BR><SPAN class="keywords">function</SPAN>&nbsp;showRequest(formData,&nbsp;jqForm,&nbsp;options)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;formData&nbsp;is&nbsp;an&nbsp;array;&nbsp;here&nbsp;we&nbsp;use&nbsp;$.param&nbsp;to&nbsp;convert&nbsp;it&nbsp;to&nbsp;a&nbsp;string&nbsp;to&nbsp;display&nbsp;it</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;but&nbsp;the&nbsp;form&nbsp;plugin&nbsp;does&nbsp;this&nbsp;for&nbsp;you&nbsp;automatically&nbsp;when&nbsp;it&nbsp;submits&nbsp;the&nbsp;data</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;queryString</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>.param(formData);&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;jqForm&nbsp;is&nbsp;a&nbsp;jQuery&nbsp;object&nbsp;encapsulating&nbsp;the&nbsp;form&nbsp;element.&nbsp;&nbsp;To&nbsp;access&nbsp;the</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;DOM&nbsp;element&nbsp;for&nbsp;the&nbsp;form&nbsp;do&nbsp;this:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;var&nbsp;formElement&nbsp;=&nbsp;jqForm[0];</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;About&nbsp;to&nbsp;submit:&nbsp;\n\n&#39;</SPAN>&nbsp;+&nbsp;queryString);&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;here&nbsp;we&nbsp;could&nbsp;return&nbsp;false&nbsp;to&nbsp;prevent&nbsp;the&nbsp;form&nbsp;from&nbsp;being&nbsp;submitted;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;returning&nbsp;anything&nbsp;other&nbsp;than&nbsp;false&nbsp;will&nbsp;allow&nbsp;the&nbsp;form&nbsp;submit&nbsp;to&nbsp;continue</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">true</SPAN>;&nbsp;<BR>}&nbsp;<BR>&nbsp;<BR><SPAN class="com">//&nbsp;post-submit&nbsp;callback</SPAN>&nbsp;<BR><SPAN class="keywords">function</SPAN>&nbsp;showResponse(responseText,&nbsp;statusText)&nbsp;&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;for&nbsp;normal&nbsp;html&nbsp;responses,&nbsp;the&nbsp;first&nbsp;argument&nbsp;to&nbsp;the&nbsp;success&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;is&nbsp;the&nbsp;XMLHttpRequest&nbsp;object&#39;s&nbsp;responseText&nbsp;property</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;if&nbsp;the&nbsp;ajaxForm&nbsp;method&nbsp;was&nbsp;passed&nbsp;an&nbsp;Options&nbsp;Object&nbsp;with&nbsp;the&nbsp;dataType</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;property&nbsp;set&nbsp;to&nbsp;&#39;xml&#39;&nbsp;then&nbsp;the&nbsp;first&nbsp;argument&nbsp;to&nbsp;the&nbsp;success&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;is&nbsp;the&nbsp;XMLHttpRequest&nbsp;object&#39;s&nbsp;responseXML&nbsp;property</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;if&nbsp;the&nbsp;ajaxForm&nbsp;method&nbsp;was&nbsp;passed&nbsp;an&nbsp;Options&nbsp;Object&nbsp;with&nbsp;the&nbsp;dataType</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;property&nbsp;set&nbsp;to&nbsp;&#39;json&#39;&nbsp;then&nbsp;the&nbsp;first&nbsp;argument&nbsp;to&nbsp;the&nbsp;success&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;is&nbsp;the&nbsp;json&nbsp;data&nbsp;object&nbsp;returned&nbsp;by&nbsp;the&nbsp;server</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;status:&nbsp;&#39;</SPAN>&nbsp;+&nbsp;statusText&nbsp;+&nbsp;<SPAN class="string">&#39;\n\nresponseText:&nbsp;\n&#39;</SPAN>&nbsp;+&nbsp;responseText&nbsp;+&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">&#39;\n\nThe&nbsp;output&nbsp;div&nbsp;should&nbsp;have&nbsp;already&nbsp;been&nbsp;updated&nbsp;with&nbsp;the&nbsp;responseText.&#39;</SPAN>);&nbsp;<BR>}&nbsp;<BR></CODE></PRE>
+                <FORM id="myForm1" action="http://malsup.com/jquery/form/dummy.php" method="post"><DIV>
+                        <INPUT type="hidden" name="Hidden" value="hiddenValue">
+                        <TABLE>
+                        <TBODY><TR><TD>Name:</TD><TD><INPUT name="Name" type="text" value="MyName1"></TD></TR>
+                        <TR><TD>Password:</TD><TD><INPUT name="Password" type="password"></TD></TR>
+                        <TR><TD>Multiple:</TD><TD><SELECT name="Multiple" multiple="multiple">
+
+                            <OPTGROUP label="Group 1">
+                                <OPTION value="one" selected="selected">One</OPTION>
+                                <OPTION value="two">Two</OPTION>
+                                <OPTION value="three">Three</OPTION>
+                            </OPTGROUP>
+                            <OPTGROUP label="Group 2">
+                                <OPTION value="four">Four</OPTION>
+
+                                <OPTION value="five">Five</OPTION>
+                                <OPTION value="six">Six</OPTION>
+                            </OPTGROUP>
+                        </SELECT></TD></TR>
+                        <TR><TD>Single:</TD><TD><SELECT name="Single">
+                            <OPTION value="one" selected="selected">One</OPTION>
+                            <OPTION value="two">Two</OPTION>
+
+                            <OPTION value="three">Three</OPTION>
+                        </SELECT></TD></TR>
+                        <TR><TD>Single2:</TD><TD><SELECT name="Single2">
+                            <OPTGROUP label="Group 1">
+                                <OPTION value="A" selected="selected">A</OPTION>
+                                <OPTION value="B">B</OPTION>
+                                <OPTION value="C">C</OPTION>
+                            </OPTGROUP>
+                            <OPTGROUP label="Group 2">
+                                <OPTION value="D">D</OPTION>
+                                <OPTION value="E">E</OPTION>
+                                <OPTION value="F">F</OPTION>
+                            </OPTGROUP>
+                        </SELECT></TD></TR>
+
+                        <TR><TD>Check:</TD><TD>
+                            <INPUT type="checkbox" name="Check" value="1">
+                            <INPUT type="checkbox" name="Check" value="2">
+                            <INPUT type="checkbox" name="Check" value="3">
+                        </TD></TR>
+                        <TR><TD>Radio:</TD><TD>
+                            <INPUT type="radio" name="Radio" value="1">
+                            <INPUT type="radio" name="Radio" value="2">
+
+                            <INPUT type="radio" name="Radio" value="3">
+                        </TD></TR>
+                        <TR><TD>Text:</TD><TD><TEXTAREA name="Text" rows="2" cols="20">This is Form1</TEXTAREA></TD></TR>
+                        </TBODY></TABLE>
+                        <INPUT type="reset" name="resetButton " value="Reset">
+                        <INPUT type="submit" name="submitButton" value="Submit1">
+                        <INPUT type="image" name="submitButton" value="Submit2" src="./http   malsup.com jquery form #code-samples.htm_files/submit.gif">
+                </DIV></FORM>
+                <H1>Output Div (#output1):</H1>
+                <DIV id="output1">AJAX response will replace this content.</DIV>
+            </DIV>
+
+
+            <DIV id="sample2" class="sampleTabContent tabs-hide">
+            <P>
+            The following code controls the HTML form beneath it. It uses <CODE class="inline">ajaxSubmit</CODE>
+                to submit the form.
+                </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;the&nbsp;form&nbsp;when&nbsp;the&nbsp;DOM&nbsp;is&nbsp;ready</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;options</SPAN>&nbsp;=&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">&#39;#output2&#39;</SPAN>,&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;target&nbsp;element(s)&nbsp;to&nbsp;be&nbsp;updated&nbsp;with&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeSubmit:&nbsp;&nbsp;showRequest,&nbsp;&nbsp;<SPAN class="com">//&nbsp;pre-submit&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;showResponse&nbsp;&nbsp;<SPAN class="com">//&nbsp;post-submit&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;other&nbsp;available&nbsp;options:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//url:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;override&nbsp;for&nbsp;form&#39;s&nbsp;&#39;action&#39;&nbsp;attribute</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&#39;get&#39;&nbsp;or&nbsp;&#39;post&#39;,&nbsp;override&nbsp;for&nbsp;form&#39;s&nbsp;&#39;method&#39;&nbsp;attribute</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//dataType:&nbsp;&nbsp;null&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&#39;xml&#39;,&nbsp;&#39;script&#39;,&nbsp;or&nbsp;&#39;json&#39;&nbsp;(expected&nbsp;server&nbsp;response&nbsp;type)</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//clearForm:&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;clear&nbsp;all&nbsp;form&nbsp;fields&nbsp;after&nbsp;successful&nbsp;submit</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//resetForm:&nbsp;true&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;reset&nbsp;the&nbsp;form&nbsp;after&nbsp;successful&nbsp;submit</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;$.ajax&nbsp;options&nbsp;can&nbsp;be&nbsp;used&nbsp;here&nbsp;too,&nbsp;for&nbsp;example:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//timeout:&nbsp;&nbsp;&nbsp;3000</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;};&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;to&nbsp;the&nbsp;form&#39;s&nbsp;submit&nbsp;event</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm2&#39;</SPAN>).submit(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;inside&nbsp;event&nbsp;callbacks&nbsp;&#39;this&#39;&nbsp;is&nbsp;the&nbsp;DOM&nbsp;element&nbsp;so&nbsp;we&nbsp;first</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;wrap&nbsp;it&nbsp;in&nbsp;a&nbsp;jQuery&nbsp;object&nbsp;and&nbsp;then&nbsp;invoke&nbsp;ajaxSubmit</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="keywords">this</SPAN>).<SPAN class="plugin">ajaxSubmit</SPAN>(options);&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;!!!&nbsp;Important&nbsp;!!!</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;always&nbsp;return&nbsp;false&nbsp;to&nbsp;prevent&nbsp;standard&nbsp;browser&nbsp;submit&nbsp;and&nbsp;page&nbsp;navigation</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">false</SPAN>;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;<BR>});&nbsp;<BR>&nbsp;<BR><SPAN class="com">//&nbsp;pre-submit&nbsp;callback</SPAN>&nbsp;<BR><SPAN class="keywords">function</SPAN>&nbsp;showRequest(formData,&nbsp;jqForm,&nbsp;options)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;formData&nbsp;is&nbsp;an&nbsp;array;&nbsp;here&nbsp;we&nbsp;use&nbsp;$.param&nbsp;to&nbsp;convert&nbsp;it&nbsp;to&nbsp;a&nbsp;string&nbsp;to&nbsp;display&nbsp;it</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;but&nbsp;the&nbsp;form&nbsp;plugin&nbsp;does&nbsp;this&nbsp;for&nbsp;you&nbsp;automatically&nbsp;when&nbsp;it&nbsp;submits&nbsp;the&nbsp;data</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;queryString</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>.param(formData);&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;jqForm&nbsp;is&nbsp;a&nbsp;jQuery&nbsp;object&nbsp;encapsulating&nbsp;the&nbsp;form&nbsp;element.&nbsp;&nbsp;To&nbsp;access&nbsp;the</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;DOM&nbsp;element&nbsp;for&nbsp;the&nbsp;form&nbsp;do&nbsp;this:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;var&nbsp;formElement&nbsp;=&nbsp;jqForm[0];</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;About&nbsp;to&nbsp;submit:&nbsp;\n\n&#39;</SPAN>&nbsp;+&nbsp;queryString);&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;here&nbsp;we&nbsp;could&nbsp;return&nbsp;false&nbsp;to&nbsp;prevent&nbsp;the&nbsp;form&nbsp;from&nbsp;being&nbsp;submitted;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;returning&nbsp;anything&nbsp;other&nbsp;than&nbsp;false&nbsp;will&nbsp;allow&nbsp;the&nbsp;form&nbsp;submit&nbsp;to&nbsp;continue</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">true</SPAN>;&nbsp;<BR>}&nbsp;<BR>&nbsp;<BR><SPAN class="com">//&nbsp;post-submit&nbsp;callback</SPAN>&nbsp;<BR><SPAN class="keywords">function</SPAN>&nbsp;showResponse(responseText,&nbsp;statusText)&nbsp;&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;for&nbsp;normal&nbsp;html&nbsp;responses,&nbsp;the&nbsp;first&nbsp;argument&nbsp;to&nbsp;the&nbsp;success&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;is&nbsp;the&nbsp;XMLHttpRequest&nbsp;object&#39;s&nbsp;responseText&nbsp;property</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;if&nbsp;the&nbsp;ajaxSubmit&nbsp;method&nbsp;was&nbsp;passed&nbsp;an&nbsp;Options&nbsp;Object&nbsp;with&nbsp;the&nbsp;dataType</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;property&nbsp;set&nbsp;to&nbsp;&#39;xml&#39;&nbsp;then&nbsp;the&nbsp;first&nbsp;argument&nbsp;to&nbsp;the&nbsp;success&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;is&nbsp;the&nbsp;XMLHttpRequest&nbsp;object&#39;s&nbsp;responseXML&nbsp;property</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;if&nbsp;the&nbsp;ajaxSubmit&nbsp;method&nbsp;was&nbsp;passed&nbsp;an&nbsp;Options&nbsp;Object&nbsp;with&nbsp;the&nbsp;dataType</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;property&nbsp;set&nbsp;to&nbsp;&#39;json&#39;&nbsp;then&nbsp;the&nbsp;first&nbsp;argument&nbsp;to&nbsp;the&nbsp;success&nbsp;callback</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;is&nbsp;the&nbsp;json&nbsp;data&nbsp;object&nbsp;returned&nbsp;by&nbsp;the&nbsp;server</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;status:&nbsp;&#39;</SPAN>&nbsp;+&nbsp;statusText&nbsp;+&nbsp;<SPAN class="string">&#39;\n\nresponseText:&nbsp;\n&#39;</SPAN>&nbsp;+&nbsp;responseText&nbsp;+&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">&#39;\n\nThe&nbsp;output&nbsp;div&nbsp;should&nbsp;have&nbsp;already&nbsp;been&nbsp;updated&nbsp;with&nbsp;the&nbsp;responseText.&#39;</SPAN>);&nbsp;<BR>}&nbsp;<BR></CODE></PRE>
+                <FORM id="myForm2" action="http://malsup.com/jquery/form/dummy2.php" method="post"><DIV>
+
+                        <INPUT type="hidden" name="Hidden" value="hiddenValue">
+                        <TABLE>
+                        <TBODY><TR><TD>Name:</TD><TD><INPUT name="Name" type="text" value="MyName2"></TD></TR>
+                        <TR><TD>Password:</TD><TD><INPUT name="Password" type="password"></TD></TR>
+                        <TR><TD>Multiple:</TD><TD><SELECT name="Multiple" multiple="multiple">
+                            <OPTGROUP label="Group 1">
+                                <OPTION value="one" selected="selected">One</OPTION>
+
+                                <OPTION value="two">Two</OPTION>
+                                <OPTION value="three">Three</OPTION>
+                            </OPTGROUP>
+                            <OPTGROUP label="Group 2">
+                                <OPTION value="four">Four</OPTION>
+                                <OPTION value="five">Five</OPTION>
+                                <OPTION value="six">Six</OPTION>
+
+                            </OPTGROUP>
+                        </SELECT></TD></TR>
+                        <TR><TD>Single:</TD><TD><SELECT name="Single">
+                            <OPTION value="one" selected="selected">One</OPTION>
+                            <OPTION value="two">Two</OPTION>
+                            <OPTION value="three">Three</OPTION>
+                        </SELECT></TD></TR>
+
+                        <TR><TD>Single2:</TD><TD><SELECT name="Single2">
+                            <OPTGROUP label="Group 1">
+                                <OPTION value="A" selected="selected">A</OPTION>
+                                <OPTION value="B">B</OPTION>
+                                <OPTION value="C">C</OPTION>
+                            </OPTGROUP>
+                            <OPTGROUP label="Group 2">
+
+                                <OPTION value="D">D</OPTION>
+                                <OPTION value="E">E</OPTION>
+                                <OPTION value="F">F</OPTION>
+                            </OPTGROUP>
+                        </SELECT></TD></TR>
+                        <TR><TD>Check:</TD><TD>
+                            <INPUT type="checkbox" name="Check" value="1">
+
+                            <INPUT type="checkbox" name="Check" value="2">
+                            <INPUT type="checkbox" name="Check" value="3">
+                        </TD></TR>
+                        <TR><TD>Radio:</TD><TD>
+                            <INPUT type="radio" name="Radio" value="1">
+                            <INPUT type="radio" name="Radio" value="2">
+                            <INPUT type="radio" name="Radio" value="3">
+                        </TD></TR>
+                        <TR><TD>Text:</TD><TD><TEXTAREA name="Text" rows="2" cols="20">This is Form2</TEXTAREA></TD></TR>
+
+                        </TBODY></TABLE>
+                        <INPUT type="reset" name="resetButton " value="Reset">
+                        <INPUT type="submit" name="submitButton" value="Submit1">
+                        <INPUT type="image" name="submitButton" value="Submit2" src="./http   malsup.com jquery form #code-samples.htm_files/submit.gif">
+                </DIV></FORM>
+                <H1>Output Div (#output2):</H1>
+                <DIV id="output2">AJAX response will replace this content.</DIV>
+            </DIV>
+
+            <DIV id="sample3" class="sampleTabContent tabs-hide">
+            <P>
+            This page gives several examples of how form data can be validated before it is sent to
+            the server.  The secret is in the <CODE class="inline">beforeSubmit</CODE> option.  If this
+            pre-submit callback returns false, the submit process is aborted.
+            </P><P>
+            The following login form is used for each of the examples that follow.  Each example
+            will validate that both the <EM>username</EM> and <EM>password</EM> fields have been filled
+            in by the user.
+            </P><P>
+            <STRONG>Form Markup:</STRONG>
+            </P><PRE><CODE class="mix"><SPAN class="tag">&lt;form</SPAN><SPAN class="aname">&nbsp;id</SPAN>=<SPAN class="string">&quot;validationForm&quot;</SPAN><SPAN class="aname">&nbsp;action</SPAN>=<SPAN class="string">&quot;dummy.php&quot;</SPAN><SPAN class="aname">&nbsp;method</SPAN>=<SPAN class="string">&quot;post&quot;</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Username:&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text&quot;</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;username&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Password:&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;password&quot;</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;password&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;submit&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Submit&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR><SPAN class="tag">&lt;/form&gt;</SPAN></CODE></PRE>
+            <P>
+            First, we initialize the form and give it a <CODE class="inline">beforeSubmit</CODE>
+            callback function - this is the validation function.
+            </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;the&nbsp;form&nbsp;when&nbsp;the&nbsp;DOM&nbsp;is&nbsp;ready</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;form&nbsp;using&nbsp;ajaxForm</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm2&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>(&nbsp;{&nbsp;beforeSubmit:&nbsp;validate&nbsp;}&nbsp;);&nbsp;<BR>});</CODE></PRE>
+
+            <H3>Validate Using the <CODE>formData</CODE> Argument</H3>
+            <FORM id="validateForm1" action="http://malsup.com/jquery/form/dummy.php" method="post"><DIV>
+                Username: <INPUT type="text" name="username">
+                Password: <INPUT type="password" name="password">
+                <INPUT type="submit" value="Submit">
+            </DIV></FORM>
+            <PRE><CODE class="mix"><SPAN class="keywords">function</SPAN>&nbsp;validate(formData,&nbsp;jqForm,&nbsp;options)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;formData&nbsp;is&nbsp;an&nbsp;array&nbsp;of&nbsp;objects&nbsp;representing&nbsp;the&nbsp;name&nbsp;and&nbsp;value&nbsp;of&nbsp;each&nbsp;field</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;that&nbsp;will&nbsp;be&nbsp;sent&nbsp;to&nbsp;the&nbsp;server;&nbsp;&nbsp;it&nbsp;takes&nbsp;the&nbsp;following&nbsp;form:</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;[</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;name:&nbsp;&nbsp;username,&nbsp;value:&nbsp;valueOfUsernameInput&nbsp;},</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;name:&nbsp;&nbsp;password,&nbsp;value:&nbsp;valueOfPasswordInput&nbsp;}</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;]</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;To&nbsp;validate,&nbsp;we&nbsp;can&nbsp;examine&nbsp;the&nbsp;contents&nbsp;of&nbsp;this&nbsp;array&nbsp;to&nbsp;see&nbsp;if&nbsp;the</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;username&nbsp;and&nbsp;password&nbsp;fields&nbsp;have&nbsp;values.&nbsp;&nbsp;If&nbsp;either&nbsp;value&nbsp;evaluates</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;to&nbsp;false&nbsp;then&nbsp;we&nbsp;return&nbsp;false&nbsp;from&nbsp;this&nbsp;method.</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">for</SPAN>&nbsp;(<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;i</SPAN>=<SPAN class="numbers">0</SPAN>;&nbsp;i&nbsp;&lt;&nbsp;formData.length;&nbsp;i++)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">if</SPAN>&nbsp;(!formData[i].value)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Please&nbsp;enter&nbsp;a&nbsp;value&nbsp;for&nbsp;both&nbsp;Username&nbsp;and&nbsp;Password&#39;</SPAN>);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">false</SPAN>;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Both&nbsp;fields&nbsp;contain&nbsp;values.&#39;</SPAN>);&nbsp;<BR>}</CODE></PRE>
+            <H3>Validate Using the <CODE>jqForm</CODE> Argument</H3>
+            <FORM id="validateForm2" action="http://malsup.com/jquery/form/dummy.php" method="post"><DIV>
+                Username: <INPUT type="text" name="username">
+                Password: <INPUT type="password" name="password">
+                <INPUT type="submit" value="Submit">
+            </DIV></FORM>
+            <PRE><CODE class="mix"><SPAN class="keywords">function</SPAN>&nbsp;validate(formData,&nbsp;jqForm,&nbsp;options)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;jqForm&nbsp;is&nbsp;a&nbsp;jQuery&nbsp;object&nbsp;which&nbsp;wraps&nbsp;the&nbsp;form&nbsp;DOM&nbsp;element</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;To&nbsp;validate,&nbsp;we&nbsp;can&nbsp;access&nbsp;the&nbsp;DOM&nbsp;elements&nbsp;directly&nbsp;and&nbsp;return&nbsp;true</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;only&nbsp;if&nbsp;the&nbsp;values&nbsp;of&nbsp;both&nbsp;the&nbsp;username&nbsp;and&nbsp;password&nbsp;fields&nbsp;evaluate</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;to&nbsp;true</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;form</SPAN>&nbsp;=&nbsp;jqForm[<SPAN class="numbers">0</SPAN>];&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">if</SPAN>&nbsp;(!form.username.value&nbsp;||&nbsp;!form.password.value)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Please&nbsp;enter&nbsp;a&nbsp;value&nbsp;for&nbsp;both&nbsp;Username&nbsp;and&nbsp;Password&#39;</SPAN>);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">false</SPAN>;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Both&nbsp;fields&nbsp;contain&nbsp;values.&#39;</SPAN>);&nbsp;<BR>}</CODE></PRE>
+            <H3>Validate Using the <CODE>fieldValue</CODE> Method</H3>
+            <FORM id="validateForm3" action="http://malsup.com/jquery/form/dummy.php" method="post"><DIV>
+                Username: <INPUT type="text" name="username">
+                Password: <INPUT type="password" name="password">
+                <INPUT type="submit" value="Submit">
+            </DIV></FORM>
+            <PRE><CODE class="mix"><SPAN class="keywords">function</SPAN>&nbsp;validate(formData,&nbsp;jqForm,&nbsp;options)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;fieldValue&nbsp;is&nbsp;a&nbsp;Form&nbsp;Plugin&nbsp;method&nbsp;that&nbsp;can&nbsp;be&nbsp;invoked&nbsp;to&nbsp;find&nbsp;the</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;current&nbsp;value&nbsp;of&nbsp;a&nbsp;field</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;To&nbsp;validate,&nbsp;we&nbsp;can&nbsp;capture&nbsp;the&nbsp;values&nbsp;of&nbsp;both&nbsp;the&nbsp;username&nbsp;and&nbsp;password</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;fields&nbsp;and&nbsp;return&nbsp;true&nbsp;only&nbsp;if&nbsp;both&nbsp;evaluate&nbsp;to&nbsp;true</SPAN>&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;usernameValue</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;input[@name=username]&#39;</SPAN>).<SPAN class="plugin">fieldValue</SPAN>();&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;passwordValue</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;input[@name=password]&#39;</SPAN>).<SPAN class="plugin">fieldValue</SPAN>();&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;usernameValue&nbsp;and&nbsp;passwordValue&nbsp;are&nbsp;arrays&nbsp;but&nbsp;we&nbsp;can&nbsp;do&nbsp;simple</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;&quot;not&quot;&nbsp;tests&nbsp;to&nbsp;see&nbsp;if&nbsp;the&nbsp;arrays&nbsp;are&nbsp;empty</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">if</SPAN>&nbsp;(!usernameValue[<SPAN class="numbers">0</SPAN>]&nbsp;||&nbsp;!passwordValue[<SPAN class="numbers">0</SPAN>])&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Please&nbsp;enter&nbsp;a&nbsp;value&nbsp;for&nbsp;both&nbsp;Username&nbsp;and&nbsp;Password&#39;</SPAN>);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">return</SPAN>&nbsp;<SPAN class="keywords">false</SPAN>;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(<SPAN class="string">&#39;Both&nbsp;fields&nbsp;contain&nbsp;values.&#39;</SPAN>);&nbsp;<BR>}</CODE></PRE>
+            <P>
+            </P><H3>Note</H3>
+            You can find jQuery plugins that deal specifically with field validation
+            on the <A href="http://docs.jquery.com/Plugins#Forms" class="external">jQuery Plugins Page</A>.
+
+
+            </DIV>
+
+            <DIV id="sample4" class="sampleTabContent tabs-hide">
+            <P>
+            This page shows how to handle JSON data returned from the server.
+            </P><P>
+            The form below submits a message to the server and the server
+            echos it back in JSON format.
+            <BR>
+            <STRONG>Form markup:</STRONG>
+            </P><PRE><CODE class="mix"><SPAN class="tag">&lt;form</SPAN><SPAN class="aname">&nbsp;id</SPAN>=<SPAN class="string">&quot;jsonForm&quot;</SPAN><SPAN class="aname">&nbsp;action</SPAN>=<SPAN class="string">&quot;json-echo.php&quot;</SPAN><SPAN class="aname">&nbsp;method</SPAN>=<SPAN class="string">&quot;post&quot;</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Message:&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text&quot;</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;message&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Hello&nbsp;JSON&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;submit&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Echo&nbsp;as&nbsp;JSON&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR><SPAN class="tag">&lt;/form&gt;</SPAN></CODE></PRE>
+            <P>
+            </P><FORM id="jsonForm" action="http://malsup.com/jquery/form/json-echo.php" method="post"><DIV>
+                Message: <INPUT type="text" name="message" value="Hello JSON">
+                <INPUT type="submit" value="Echo as JSON">
+            </DIV></FORM>
+            <BR>
+            <STRONG>Server code in</STRONG> <CODE class="inline">json-echo.php</CODE>:
+            <PRE><CODE class="php"><SPAN class="tag">&lt;?php</SPAN>&nbsp;&nbsp;<SPAN class="keyword">echo</SPAN>&nbsp;<SPAN class="string1">&#39;{&nbsp;message:&nbsp;&quot;&#39;</SPAN>&nbsp;.&nbsp;<SPAN class="global">$_POST</SPAN>[<SPAN class="string1">&#39;message&#39;</SPAN>]&nbsp;.&nbsp;<SPAN class="string1">&#39;&quot;&nbsp;}&#39;</SPAN>;&nbsp;&nbsp;<SPAN class="tag">?&gt;</SPAN></CODE></PRE>
+            <STRONG>JavaScript:</STRONG>
+            <PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;the&nbsp;form&nbsp;when&nbsp;the&nbsp;DOM&nbsp;is&nbsp;ready</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;form&nbsp;using&nbsp;ajaxForm</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#jsonForm&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>({&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;dataType&nbsp;identifies&nbsp;the&nbsp;expected&nbsp;content&nbsp;type&nbsp;of&nbsp;the&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType:&nbsp;&nbsp;<SPAN class="string">&#39;json&#39;</SPAN>,&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;success&nbsp;identifies&nbsp;the&nbsp;function&nbsp;to&nbsp;invoke&nbsp;when&nbsp;the&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;has&nbsp;been&nbsp;received</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;&nbsp;&nbsp;processJson&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;<BR>});</CODE></PRE>
+
+            <STRONG>Callback function</STRONG>
+            <PRE><CODE class="mix"><SPAN class="keywords">function</SPAN>&nbsp;processJson(data)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;&#39;data&#39;&nbsp;is&nbsp;the&nbsp;json&nbsp;object&nbsp;returned&nbsp;from&nbsp;the&nbsp;server</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(data.message);&nbsp;<BR>}</CODE></PRE>
+            </DIV>
+
+            <DIV id="sample6" class="sampleTabContent tabs-hide">
+            <P>
+            This page shows how to handle HTML data returned from the server.
+            </P><P>
+            The form below submits a message to the server and the server
+            echos it back in an HTML div.  The response is added to this
+            page in the <CODE class="inline">htmlExampleTarget</CODE> div below.
+            <BR>
+            <STRONG>Form markup:</STRONG>
+            </P><PRE><CODE class="mix"><SPAN class="tag">&lt;form</SPAN><SPAN class="aname">&nbsp;id</SPAN>=<SPAN class="string">&quot;htmlForm&quot;</SPAN><SPAN class="aname">&nbsp;action</SPAN>=<SPAN class="string">&quot;html-echo.php&quot;</SPAN><SPAN class="aname">&nbsp;method</SPAN>=<SPAN class="string">&quot;post&quot;</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Message:&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text&quot;</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;message&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Hello&nbsp;HTML&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;submit&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Echo&nbsp;as&nbsp;HTML&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR><SPAN class="tag">&lt;/form&gt;</SPAN></CODE></PRE>
+            <P>
+            </P><FORM id="htmlForm" action="http://malsup.com/jquery/form/html-echo.php" method="post"><DIV>
+                Message: <INPUT type="text" name="message" value="Hello HTML">
+                <INPUT type="submit" value="Echo as HTML">
+            </DIV></FORM>
+            <BR>
+            <STRONG>Server code in</STRONG> <CODE class="inline">html-echo.php</CODE>:
+            <PRE><CODE class="php"><SPAN class="tag">&lt;?php</SPAN>&nbsp;<BR><SPAN class="keyword">echo</SPAN>&nbsp;<SPAN class="string1">&#39;&lt;div&nbsp;style=&quot;background-color:#ffa;&nbsp;padding:20px&quot;&gt;&#39;</SPAN>&nbsp;.&nbsp;<SPAN class="global">$_POST</SPAN>[<SPAN class="string1">&#39;message&#39;</SPAN>]&nbsp;.&nbsp;<SPAN class="string1">&#39;&lt;/div&gt;&#39;</SPAN>;&nbsp;<BR><SPAN class="tag">?&gt;</SPAN></CODE></PRE>
+            <STRONG>JavaScript:</STRONG>
+            <PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;the&nbsp;form&nbsp;when&nbsp;the&nbsp;DOM&nbsp;is&nbsp;ready</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;form&nbsp;using&nbsp;ajaxForm</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#htmlForm&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>({&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;target&nbsp;identifies&nbsp;the&nbsp;element(s)&nbsp;to&nbsp;update&nbsp;with&nbsp;the&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target:&nbsp;<SPAN class="string">&#39;#htmlExampleTarget&#39;</SPAN>,&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;success&nbsp;identifies&nbsp;the&nbsp;function&nbsp;to&nbsp;invoke&nbsp;when&nbsp;the&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;has&nbsp;been&nbsp;received;&nbsp;here&nbsp;we&nbsp;apply&nbsp;a&nbsp;fade-in&nbsp;effect&nbsp;to&nbsp;the&nbsp;new&nbsp;content</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#htmlExampleTarget&#39;</SPAN>).fadeIn(<SPAN class="string">&#39;slow&#39;</SPAN>);&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;<BR>});</CODE></PRE>
+            <H3>htmlExampleTarget (output will be added below):</H3>
+            <DIV id="htmlExampleTarget"></DIV>
+            </DIV>
+
+            <DIV id="sample5" class="sampleTabContent tabs-hide">
+            <P>
+            This page shows how to handle XML data returned from the server.
+            </P><P>
+            The form below submits a message to the server and the server
+            echos it back in XML format.
+            <BR>
+            <STRONG>Form markup:</STRONG>
+            </P><PRE><CODE class="mix"><SPAN class="tag">&lt;form</SPAN><SPAN class="aname">&nbsp;id</SPAN>=<SPAN class="string">&quot;xmlForm&quot;</SPAN><SPAN class="aname">&nbsp;action</SPAN>=<SPAN class="string">&quot;xml-echo.php&quot;</SPAN><SPAN class="aname">&nbsp;method</SPAN>=<SPAN class="string">&quot;post&quot;</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Message:&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;text&quot;</SPAN><SPAN class="aname">&nbsp;name</SPAN>=<SPAN class="string">&quot;message&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Hello&nbsp;XML&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;input</SPAN><SPAN class="aname">&nbsp;type</SPAN>=<SPAN class="string">&quot;submit&quot;</SPAN><SPAN class="aname">&nbsp;value</SPAN>=<SPAN class="string">&quot;Echo&nbsp;as&nbsp;XML&quot;</SPAN>&nbsp;<SPAN class="tag">/&gt;</SPAN>&nbsp;<BR><SPAN class="tag">&lt;/form&gt;</SPAN></CODE></PRE>
+            <P>
+            </P><FORM id="xmlForm" action="http://malsup.com/jquery/form/xml-echo.php" method="post"><DIV>
+                Message: <INPUT type="text" name="message" value="Hello XML">
+                <INPUT type="submit" value="Echo as XML">
+            </DIV></FORM>
+            <BR>
+            <STRONG>Server code in</STRONG> <CODE class="inline">xml-echo.php</CODE>:
+            <PRE><CODE class="php"><SPAN class="tag">&lt;?php</SPAN>&nbsp;<BR><SPAN class="com">//&nbsp;!!!&nbsp;IMPORTANT&nbsp;!!!&nbsp;-&nbsp;the&nbsp;server&nbsp;must&nbsp;set&nbsp;the&nbsp;content&nbsp;type&nbsp;to&nbsp;XML</SPAN>&nbsp;<BR>header(<SPAN class="string1">&#39;Content-type:&nbsp;text/xml&#39;</SPAN>);&nbsp;<BR><SPAN class="keyword">echo</SPAN>&nbsp;<SPAN class="string1">&#39;&lt;root&gt;&lt;message&gt;&#39;</SPAN>&nbsp;.&nbsp;<SPAN class="global">$_POST</SPAN>[<SPAN class="string1">&#39;message&#39;</SPAN>]&nbsp;.&nbsp;<SPAN class="string1">&#39;&lt;/message&gt;&lt;/root&gt;&#39;</SPAN>;&nbsp;<BR><SPAN class="tag">?&gt;</SPAN></CODE></PRE>
+            <STRONG>JavaScript:</STRONG>
+            <PRE><CODE class="mix"><SPAN class="com">//&nbsp;prepare&nbsp;the&nbsp;form&nbsp;when&nbsp;the&nbsp;DOM&nbsp;is&nbsp;ready</SPAN>&nbsp;<BR><SPAN class="jquery">$</SPAN>(<SPAN class="global">document</SPAN>).ready(<SPAN class="keywords">function</SPAN>()&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;bind&nbsp;form&nbsp;using&nbsp;ajaxForm</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#xmlForm&#39;</SPAN>).<SPAN class="plugin">ajaxForm</SPAN>({&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;dataType&nbsp;identifies&nbsp;the&nbsp;expected&nbsp;content&nbsp;type&nbsp;of&nbsp;the&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType:&nbsp;&nbsp;<SPAN class="string">&#39;xml&#39;</SPAN>,&nbsp;<BR>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;success&nbsp;identifies&nbsp;the&nbsp;function&nbsp;to&nbsp;invoke&nbsp;when&nbsp;the&nbsp;server&nbsp;response</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;has&nbsp;been&nbsp;received</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;&nbsp;&nbsp;processXml&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;});&nbsp;<BR>});</CODE></PRE>
+
+            <STRONG>Callback function</STRONG>
+            <PRE><CODE class="mix"><SPAN class="keywords">function</SPAN>&nbsp;processXml(responseXML)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;&#39;responseXML&#39;&nbsp;is&nbsp;the&nbsp;XML&nbsp;document&nbsp;returned&nbsp;by&nbsp;the&nbsp;server;&nbsp;we&nbsp;use</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;jQuery&nbsp;to&nbsp;extract&nbsp;the&nbsp;content&nbsp;of&nbsp;the&nbsp;message&nbsp;node&nbsp;from&nbsp;the&nbsp;XML&nbsp;doc</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;message</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;message&#39;</SPAN>,&nbsp;responseXML).text();&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;alert(message);&nbsp;<BR>}</CODE></PRE>
+            </DIV>
+
+            <DIV id="sample7" class="sampleTabContent tabs-hide">
+            <P>
+            This page demonstrates the Form Plugin&#39;s file upload capabilities.  There is no special
+            coding required to handle file uploads. File input elements are automatically
+            detected and processed for you.
+            </P><P>
+            Since it is not possible to upload files using the browser&#39;s
+            <CODE class="inline"><A href="http://www.w3.org/TR/XMLHttpRequest/">XMLHttpRequest</A></CODE>
+            object, the Form Plugin uses a hidden iframe element to help with the task.  This is a
+            common technique, but it has inherent limitations.  The iframe element is used as the target
+            of the form&#39;s submit operation which means that the server response is written to the iframe.
+            This is fine if the response type is HTML or XML<SUP>[1]</SUP>, but doesn&#39;t work as well if the response type is
+            script or JSON, both of which often contain characters that need to be repesented using entity
+            references when found in HTML markup.
+            </P><P>
+            To account for the challenges of script and JSON responses, the Form Plugin allows these responses
+            to be embedded in a <CODE class="inline">textarea</CODE> element and it is recommended that you
+            do so for these response types when used in conjuction with file uploads.  Please note, however, 
+            that if a file has not been selected by the user for the file input then the request uses normal
+            XHR to submit the form (not an iframe).  This puts the burden on your server code to know when
+            to use a textarea and when not to.  If you like, you can use the <CODE class="inline">iframe</CODE>
+            option of the plugin to force it to always use an <EM>iframe mode</EM> and then your server can
+            always embed the response in a textarea.
+            
+            The following response shows how a script should be returned from the server:
+            </P><PRE><CODE class="mix"><SPAN class="tag">&lt;textarea</SPAN><SPAN class="tag">&gt;</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keywords">for</SPAN>&nbsp;(<SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;i</SPAN>=<SPAN class="numbers">0</SPAN>;&nbsp;i&nbsp;&lt;&nbsp;<SPAN class="numbers">10</SPAN>;&nbsp;i++)&nbsp;{&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="com">//&nbsp;do&nbsp;some&nbsp;processing</SPAN>&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<BR><SPAN class="tag">&lt;/textarea&gt;</SPAN></CODE></PRE>
+            <P><P>
+            The form below provides an input element of type &quot;file&quot; along with a select element
+            to specify the dataType of the response.  The form is submitted to
+            <CODE class="inline"><A href="http://malsup.com/jquery/form/files-raw.php">files.php</A></CODE> which uses the dataType to
+            determine what type of response to return.
+
+            </P>
+            <FORM id="uploadForm" action="http://malsup.com/jquery/form/files.php" method="POST" enctype="multipart/form-data">
+                <INPUT type="hidden" name="MAX_FILE_SIZE" value="100000">
+                File: <INPUT type="file" name="file">
+                Return Type: <SELECT id="uploadResponseType" name="mimetype">
+                    <OPTION value="html">html</OPTION>
+                    <OPTION value="json">json</OPTION>
+                    <OPTION value="script">script</OPTION>
+                </SELECT>
+                <INPUT type="submit" value="Submit">
+            </FORM>
+
+            <P>
+            <LABEL>Output:</LABEL>
+            </P><DIV id="uploadOutput"></DIV>
+
+            <HR>
+            <DIV>[1] <EM>XML response types are not supported in Safari.</EM></DIV>
+            </DIV>
+
+        </DIV>
+    </DIV>
+
+    <DIV id="fields" class="tabContent tabs-hide">
+        <H1>Working With Fields</H1>
+                This page describes and demonstrates the Form Plugin&#39;s <CODE class="inline">fieldValue</CODE> and
+                <CODE class="inline">fieldSerialize</CODE> methods.
+                <P>
+                </P><H2>fieldValue</H2>
+                <CODE class="inline">fieldValue</CODE>
+                allows you to retrieve the current value of a field.  For example, to retrieve the value of the password
+                field in a form with the id of &#39;myForm&#39; you would write:
+                <PRE><CODE class="mix"><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;pwd</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm&nbsp;:password&#39;</SPAN>).<SPAN class="plugin">fieldValue</SPAN>()[<SPAN class="numbers">0</SPAN>];</CODE></PRE>
+                This method <STRONG>always</STRONG> returns an array.  If no valid value can be determined the
+                array will be empty, otherwise it will contain one or more values.
+                <P>
+                </P><H2>fieldSerialize</H2>
+                <CODE class="inline">fieldSerialize</CODE> allows you to serialize a subset of a form into a
+                query string.  This is useful when you need to process only certain fields.  For example,
+                to serialize only the text inputs of a form you would write:
+                <PRE><CODE class="mix"><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;queryString</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myForm&nbsp;:text&#39;</SPAN>).<SPAN class="plugin">fieldSerialize</SPAN>();</CODE></PRE>
+
+                <FORM id="inputForm" action="http://malsup.com/jquery/form/#"><DIV>
+                    <STRONG>Demonstration</STRONG><P>
+                    Enter a jQuery expression into the textbox below and then click &#39;Test&#39; to see the results
+                    of the <CODE class="inline">fieldValue</CODE> and <CODE class="inline">fieldSerialize</CODE>
+                    methods.  These methods are run against the test form that follows.</P><P>
+                    jQuery expression:
+                    <INPUT id="query" type="text" value=":text">
+                    <SPAN style="color:#555">(ie: textarea, [@type=&#39;hidden&#39;], :radio, :checkbox, etc)</SPAN>
+                    <BR><INPUT id="successful" type="checkbox" checked="checked"> Successful controls only <SUP>[1]</SUP>
+                    </P><P><INPUT type="submit" value="Test">
+                </P></DIV></FORM>
+                <BR>
+                <FORM id="test" action="http://malsup.com/jquery/form/dummy.php" method="post"><DIV>
+                    <STRONG>Test Form</STRONG>
+                    <P>
+                    </P><TABLE>
+                    <TBODY><TR><TD>&lt;input type=&quot;hidden&quot; <SPAN class="name">name=&quot;Hidden&quot;</SPAN> value=&quot;secret&quot; /&gt;</TD><TD><INPUT type="hidden" name="Hidden" value="secret"></TD></TR>
+                    <TR><TD>&lt;input <SPAN class="name">name=&quot;Name&quot;</SPAN> type=&quot;text&quot; value=&quot;MyName1&quot; /&gt;</TD><TD><INPUT name="Name" type="text" value="MyName1"></TD></TR>
+                    <TR><TD>&lt;input <SPAN class="name">name=&quot;Password&quot;</SPAN> type=&quot;password&quot; /&gt;</TD><TD><INPUT name="Password" type="password" value=""></TD></TR>
+                    <TR><TD>&lt;select <SPAN class="name">name=&quot;Multiple&quot;</SPAN> multiple=&quot;multiple&quot;&gt;</TD><TD><SELECT name="Multiple" multiple="multiple">
+                        <OPTION value="one" selected="selected">One</OPTION>
+                        <OPTION value="two">Two</OPTION>
+                        <OPTION value="three">Three</OPTION>
+                    </SELECT></TD></TR>
+                    <TR><TD>&lt;select <SPAN class="name">name=&quot;Single&quot;</SPAN>&gt;</TD><TD><SELECT name="Single">
+                        <OPTION value="one" selected="selected">One</OPTION>
+                        <OPTION value="two">Two</OPTION>
+                        <OPTION value="three">Three</OPTION>
+                    </SELECT></TD></TR>
+                    <TR><TD>&lt;input type=&quot;checkbox&quot; <SPAN class="name">name=&quot;Check&quot;</SPAN> value=&quot;1&quot; /&gt;</TD><TD><INPUT type="checkbox" name="Check" value="1"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;checkbox&quot; <SPAN class="name">name=&quot;Check&quot;</SPAN> value=&quot;2&quot; /&gt;</TD><TD><INPUT type="checkbox" name="Check" value="2"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;checkbox&quot; <SPAN class="name">name=&quot;Check&quot;</SPAN> value=&quot;3&quot; /&gt;</TD><TD><INPUT type="checkbox" name="Check" value="3"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;checkbox&quot; <SPAN class="name">name=&quot;Check2&quot;</SPAN> value=&quot;4&quot; /&gt;</TD><TD><INPUT type="checkbox" name="Check2" value="4"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;checkbox&quot; <SPAN class="name">name=&quot;Check2&quot;</SPAN> value=&quot;5&quot; /&gt;</TD><TD><INPUT type="checkbox" name="Check2" value="5"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;checkbox&quot; <SPAN class="name">name=&quot;Check3&quot;</SPAN> /&gt;</TD><TD><INPUT type="checkbox" name="Check3"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;radio&quot; <SPAN class="name">name=&quot;Radio&quot;</SPAN> value=&quot;1&quot; /&gt;</TD><TD><INPUT type="radio" name="Radio" value="1"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;radio&quot; <SPAN class="name">name=&quot;Radio&quot;</SPAN> value=&quot;2&quot; /&gt;</TD><TD><INPUT type="radio" name="Radio" value="2"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;radio&quot; <SPAN class="name">name=&quot;Radio&quot;</SPAN> value=&quot;3&quot; /&gt;</TD><TD><INPUT type="radio" name="Radio" value="3"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;radio&quot; <SPAN class="name">name=&quot;Radio2&quot;</SPAN> value=&quot;4&quot; /&gt;</TD><TD><INPUT type="radio" name="Radio2" value="4"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;radio&quot; <SPAN class="name">name=&quot;Radio2&quot;</SPAN> value=&quot;5&quot; /&gt;</TD><TD><INPUT type="radio" name="Radio2" value="5"></TD></TR>
+                    <TR><TD>&lt;textarea <SPAN class="name">name=&quot;Text&quot;</SPAN> rows=&quot;2&quot; cols=&quot;20&quot;&gt;&lt;/textarea&gt;</TD><TD><TEXTAREA name="Text" rows="2" cols="20"></TEXTAREA></TD></TR>
+                    <TR><TD>&lt;input type=&quot;reset&quot; <SPAN class="name">name=&quot;resetButton&quot;</SPAN> value=&quot;Reset&quot; /&gt;</TD><TD><INPUT type="reset" name="resetButton" value="Reset"></TD></TR>
+                    <TR><TD>&lt;input type=&quot;submit&quot; <SPAN class="name">name=&quot;sub&quot;</SPAN> value=&quot;Submit&quot; /&gt;</TD><TD><INPUT type="submit" name="submitButton" value="Submit"></TD></TR>
+                    </TBODY></TABLE>
+                </DIV></FORM>
+                <P>
+                [1] <A class="external" href="http://www.w3.org/TR/html4/interact/forms.html#successful-controls">http://www.w3.org/TR/html4/interact/forms.html#successful-controls</A>.
+                </P><P>By default, <CODE class="inline">fieldValue</CODE> and <CODE class="inline">fieldSerialize</CODE> only function on
+                &#39;successful controls&#39;.  This means that if you run the following code on a checkbox that is not checked, the result will
+                be an empty array.
+                </P><PRE><CODE class="mix"><SPAN class="com">//&nbsp;value&nbsp;will&nbsp;be&nbsp;an&nbsp;empty&nbsp;array&nbsp;if&nbsp;checkbox&nbsp;is&nbsp;not&nbsp;checked:</SPAN>&nbsp;<BR><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;value</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myUncheckedCheckbox&#39;</SPAN>).<SPAN class="plugin">fieldValue</SPAN>();&nbsp;<BR><SPAN class="com">//&nbsp;value.length&nbsp;==&nbsp;0</SPAN>&nbsp;<BR></CODE></PRE>
+                However, if you really want to know the &#39;value&#39; of the checkbox element, even if it&#39;s unchecked, you can
+                write this:
+                <PRE><CODE class="mix"><SPAN class="com">//&nbsp;value&nbsp;will&nbsp;hold&nbsp;the&nbsp;checkbox&nbsp;value&nbsp;even&nbsp;if&nbsp;it&#39;s&nbsp;not&nbsp;checked:</SPAN>&nbsp;<BR><SPAN class="keywords">var</SPAN><SPAN class="aname">&nbsp;value</SPAN>&nbsp;=&nbsp;<SPAN class="jquery">$</SPAN>(<SPAN class="string">&#39;#myUncheckedCheckbox&#39;</SPAN>).<SPAN class="plugin">fieldValue</SPAN>(<SPAN class="keywords">false</SPAN>);&nbsp;<BR><SPAN class="com">//&nbsp;value.length&nbsp;==&nbsp;1</SPAN>&nbsp;<BR></CODE></PRE>
+    </DIV>
+
+    <DIV id="faq" class="tabContent tabs-hide">
+        <H1>Frequently Asked Questions</H1>
+        <DL>
+        <DT>What versions of jQuery is the Form Plugin compatible with?</DT>
+        <DD>The Form Plugin is compatible with jQuery v1.0.3 and later.</DD>
+        <DT>Does the Form Plugin have any dependencies on other plugins?</DT>
+        <DD>No.</DD>
+        <DT>Is the Form Plugin fast?</DT>
+        <DD>Yes!  See our <A href="http://malsup.com/jquery/form/comp/">comparison page</A> for a look at how the Form Plugin compares to other libraries (including Prototype and dojo).</DD>
+        <DT>What is the easiet way to use the Form Plugin?</DT>
+        <DD><CODE class="inline">ajaxForm</CODE> provides the simplest way to enable your HTML form to use AJAX.  It&#39;s the one-stop-shopping
+           method for preparing forms.</DD>
+        <DT>What is the difference between <CODE class="inline">ajaxForm</CODE> and <CODE class="inline">ajaxSubmit</CODE>?</DT>
+        <DD>There are two main differences between these methods:
+            <OL>
+                <LI><CODE class="inline">ajaxSubmit</CODE> submits the form, <CODE class="inline">ajaxForm</CODE> does not.  When you invoke <CODE class="inline">ajaxSubmit</CODE>
+                    it immediately serializes the
+                    form data and sends it to the server.  When you invoke <CODE class="inline">ajaxForm</CODE> it adds the necessary event listeners to the form
+                    so that it can detect when the form is submitted by the user.  When this occurs <CODE class="inline">ajaxSubmit</CODE> is called for you.
+                </LI>
+                <LI>When using <CODE class="inline">ajaxForm</CODE> the submitted data will include the name and value of the submitting element (or its click coordinates if the
+                    submitting element is an image).</LI>
+            </OL>
+        </DD>
+        <DT>How can I cancel a form submit?</DT>
+        <DD>You can prevent a form from being submitted by adding a &#39;beforeSubmit&#39; callback
+            function and returning false from that function.  See the Code Samples page
+            for an example.</DD>
+        <DT>Is there a unit test suite for the Form Plugin?</DT>
+        <DD>Yes!  The Form Plugin has an extensive set of tests that are used to validate its functionality.
+        <A href="http://malsup.com/jquery/form/test/">Run unit tests.</A>
+        </DD>
+        <DT>Does the Form Plugin support file uploads?</DT>
+        <DD>Yes!</DD>
+        </DL>
+    </DIV>
+
+    <DIV id="download" class="tabContent tabs-hide" style="min-width: 0px; ">
+        <H1>Download</H1>
+        The Official Form Plugin is available in the jQuery Subversion repository:
+        <A class="external" href="http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js">http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js</A>.
+        <P>
+        There are many other useful <A class="external" href="http://docs.jquery.com/Plugins#Forms">Form Plugins</A>
+        available from the <A class="external" href="http://docs.jquery.com/Plugins">jQuery Plugins</A> page.
+        </P><P>
+        </P><H1>Support</H1>
+        Support for the Form Plugin is available through the
+        <A class="external" href="http://jquery.com/discuss/">jQuery Mailing List</A>.  This is a very active list
+        to which many jQuery developers and users subscribe.
+        <P>
+        Access to the jQuery Mailing List is also
+        available through the <A class="external" href="http://www.nabble.com/JQuery-f15494.html">Nabble Forums</A>.
+        </P><P>
+        </P><H1>Contributors</H1>
+        Development of the Form Plugin was a community effort with many people contributing ideas and code.
+        The following people have made contributions of one kind or another:
+        <UL>
+            <LI>John Resig</LI>
+            <LI>Mike Alsup</LI>
+            <LI>Mark Constable</LI>
+            <LI>Klaus Hartl</LI>
+            <LI>Matt Grimm</LI>
+            <LI>Yehuda Katz</LI>
+            <LI>J&ouml;rn Zaefferer</LI>
+            <LI>Sam Collett</LI>
+            <LI>Gilles van den Hoven</LI>
+            <LI>Kevin Glowacz</LI>
+        </UL>
+        <EM>Send me an email if I&#39;ve forgotten someone.</EM>
+        <DIV id="footer">
+        This site is maintained by Mike Alsup.  Send comments or questions to jquery at malsup dot com.
+        </DIV>
+    </DIV>
+<DIV id="busy">Loading...</DIV></DIV> <!-- main -->
+<SCRIPT src="./http   malsup.com jquery form #code-samples.htm_files/urchin.js" type="text/javascript"></SCRIPT>
+<SCRIPT type="text/javascript">
+_uacct = "UA-850242-2";
+urchinTracker();
+</SCRIPT>
+
+</BODY></HTML>

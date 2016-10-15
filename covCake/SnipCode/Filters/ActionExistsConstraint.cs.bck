@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+
+namespace covCake
+{
+    public class ActionExistsConstraint : IRouteConstraint
+    {
+
+        public bool Match
+            (
+                HttpContextBase httpContext,
+                Route route,
+                string parameterName,
+                RouteValueDictionary values,
+                RouteDirection routeDirection
+            )
+        {
+
+            Type controller = Type.GetType(values["controller"] as string);
+            var methods = controller.GetMethods(System.Reflection.BindingFlags.Public);
+            var action = methods.FirstOrDefault(m => m.Name == values["action"]);
+            return (action != null);
+//            return httpContext.Request.IsLocal;
+        }
+    }
+    
+}

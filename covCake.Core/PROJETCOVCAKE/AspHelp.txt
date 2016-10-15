@@ -1,0 +1,32 @@
+﻿Fonction
+Diagnostic.debug.writeline
+
+Class: HtmlTextWriter = Ecrire du html
+
+//Autocomplete AJAX
+
+$('.comuto_autocity').autocomplete('/api/ajax_getCityListAutoComplete.php',{
+			minChars:2,
+			width:260,
+			max:30,
+			matchContains: false,
+			delay:0,
+			mustMatch:false,
+			autoFill: false,
+			cacheLength : 1,
+			avoidFocus : true,
+			matchSubset : false,
+			formatItem: function (row) {
+				firstTime = 0;
+				return row[0];
+			},
+			formatResult: function (row) {
+				if (firstTime == 0) {
+					firstId = row[1];
+					firstVal = row[2];
+					firstTime = 1;
+				}
+				return row[2];
+			}
+		});
+		

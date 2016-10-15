@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3F574EDA-C9CE-4C8C-9F5B-858B5586C9CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>covCake</RootNamespace>
+    <AssemblyName>covCake.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\log4net bins\fromrealease\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\CovCakeConfiguration.cs" />
+    <Compile Include="Configuration\covCakeDataContextBootStrapper.cs" />
+    <Compile Include="DataAccess\covCake.cs">
+      <DependentUpon>covCake.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\covCake.designer.cs">
+      <DependentUpon>covCake.dbml</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="DataAccess\covClassInterfaces\IAbonnementProjet.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\ICovEntity.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IDepartement.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IMessagePrive.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IPays.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IProjet.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IResidence.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\ITransport.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IUserProfile.cs" />
+    <Compile Include="DataAccess\covDataAccess\AbonnementProjetDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\AlbumDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\AlerteDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\DepartementDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\MessageDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\PaysDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\ProjetDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\TransportDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAccess\UserProfileDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IAlbumDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IDataAccessLayer.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IDataProvider.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IMessageDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IPaysDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IProjetDataAccess.cs" />
+    <Compile Include="DataAccess\covDataAcessInterfaces\IUserDataAccess.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\AbonnementProjet.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\Alertes.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\MessagePrive.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\Projet.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\Residence.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\Transport.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\UserProfile.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\ref_Departement.cs" />
+    <Compile Include="DataAccess\covDbmlPartial\ref_Pays.cs" />
+    <Compile Include="DataAccess\covDataAccess\ResidenceDataAccess.cs" />
+    <Compile Include="DataAccess\DataProvider.cs" />
+    <Compile Include="DataAccess\covClassInterfaces\IAlerte.cs" />
+    <Compile Include="Extensions\CollectionExtension.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtension.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Extensions\GuidExtension.cs" />
+    <Compile Include="Extensions\HttpContextExtension.cs" />
+    <Compile Include="Extensions\ILogExtension.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtension.cs" />
+    <Compile Include="Extensions\NullableExtension.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Infrastructure\Cache\CacheManager.cs" />
+    <Compile Include="Infrastructure\CovCake.cs" />
+    <Compile Include="Infrastructure\Mail\Mailer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\LateLoadList.cs" />
+    <Compile Include="Utils\PagedList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataAccess\covCake.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>covCake.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.config.bck" />
+    <None Include="DataAccess\covCake.dbml.layout">
+      <DependentUpon>covCake.dbml</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PROJETCOVCAKE\AspHelp.txt" />
+    <Content Include="PROJETCOVCAKE\Idées_features.txt" />
+    <Content Include="PROJETCOVCAKE\ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

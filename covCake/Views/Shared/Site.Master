@@ -1,0 +1,142 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="covCake.Views.Shared.Site" %>
+<%@ Import Namespace="Helpers" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <% Html.RenderPartial("MetaHead"); %>
+    
+    <link rel="image_src" href="<%= Page.ResolveClientUrl("~/Content/fb_covlogo.png") %>" />
+  
+    
+    <title><%= Html.Encode(ViewData["Title"]) %></title>
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/covStyle.css" rel="stylesheet" type="text/css" />
+    <link href="../../facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="../../Content/Paginator.css" rel="Stylesheet" type="text/css" />
+    
+    <link href="../../Content/grid_890.css" rel="Stylesheet" type="text/css" />
+    
+     <link href="../../Scripts/jquery-tooltip/jquery.tooltip.css" rel="Stylesheet" type="text/css" />
+     
+     <script type="text/javascript" src="../../Scripts/CovCakeJs.js"></script>
+     
+     <script type="text/javascript" src="../../Scripts/MicrosoftAjax.js"></script>
+     <script type="text/javascript" src="../../Scripts/MicrosoftMvcAjax.js"></script>
+     <script type="text/javascript" src="../../Scripts/jquery-1.3.1.min.js"></script>
+     
+     <script type="text/javascript" src="../../Scripts/jquery-tooltip/jquery.tooltip.min.js" > </script>
+     <script type="text/javascript" src="../../Scripts/facebox/facebox.js"></script>
+   
+    <link rel="shortcut icon" type="image/x-icon" href="../../Content/favicon.ico" />
+    
+    <asp:ContentPlaceHolder ID="head" runat="server" />
+     
+   
+          <!--
+       <script type="text/javascript" src="../../Scripts/editinplace/jquery.inplace.js"></script>
+     <script type="text/javascript" src="../../Scripts/jquery.post/jquery.post.js"></script>
+     <script type="text/javascript" src="../../Scripts/jqueryform/jqueryform.js"></script>
+    -->
+     
+     <!--
+        <link href="http://assets.drivemeup.fr/stylesheets/main.css?1230909837" media="screen" rel="stylesheet" type="text/css" /> 
+        <link href="http://assets.drivemeup.fr/stylesheets/middle.css?1230999356" media="screen" rel="stylesheet" type="text/css" /> 
+        <link href="http://assets.drivemeup.fr/stylesheets/footer.css?1224115894" media="screen" rel="stylesheet" type="text/css" /> 
+        <link href="http://assets.drivemeup.fr/stylesheets/header.css?1226614885" media="screen" rel="stylesheet" type="text/css" />
+    -->
+     
+    <script type="text/javascript">
+
+       jQuery(document).ready(function($) {
+       
+              $('a[rel*=facebox]').facebox({
+                  loading_image: 'loading.gif',
+                  close_image: 'closelabel.gif'
+              });
+
+            $(".help").tooltip({
+                track: true,
+                delay: 0,
+                showURL: false,
+                opacity: 1,
+                // fixPNG: true,
+                //extraClass: "pretty fancy",
+
+                showBody: " - "
+            }); 
+   
+         });
+          
+    </script>
+ 
+    
+  
+<asp:ContentPlaceHolder ID="JavaScript" runat="server" />
+
+<asp:ContentPlaceHolder ID="DevStyleCSS" runat="server" />
+</head>
+
+<body>
+    <div class="page">
+
+        <div id="header">
+        <!--
+            <div id="title">
+                <h1>CoVoyage Beta</h1>
+            </div>
+             -->
+            <div id="logindisplayround">
+                <% Html.RenderPartial("ConnexionBlock"); %>
+            </div> 
+            
+            <div id="menucontainer">
+                <%-- The custom Html.MenuItem() helper is used to render each menu link --%>
+                <ul id="menu">              
+                    <%= Html.MenuItem("Accueil", "Index", "Home")%>
+                    <%= Html.MenuItem("Voyages", "Liste", "Projets")%>
+                      <% if(Request.IsAuthenticated)
+                         {
+                             // Guid currentUserId = (Guid)Membership.GetUser().ProviderUserKey;
+                             Writer.Write(Html.MenuItem("Mes Voyages", "MonCompte", "User", null, true));
+                         }
+                         else
+                         {
+                             Writer.Write(Html.MenuItem("S'inscrire", "Inscription", "Account",null,true));
+                         }%>
+                    <%= Html.MenuItem("Blog","Blog", "Services")%>
+                    <%= Html.MenuItem("Forum","Forum", "Services")%>
+                 
+                  
+                </ul>
+            </div>
+            
+      <!--
+            <div id="smallmenucontainer">
+                <ul id="smallmenu">
+                <li>Test</li>
+                <li>Test2</li>
+                </ul>     
+            </div>*
+      -->
+        </div>
+
+        <div id="main">
+    
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+             <!-- Modals -->
+          <!-- <form id="modalMessageForm" action="/Messages/SendSingleMessage" method="post">
+           <input type="text" name="message" value="enculer" /> 
+           <input type="submit" value="send" />
+           </form>-->
+
+            <% Html.RenderPartial("Footer"); %>        
+        </div>
+       
+          
+       
+        </div>
+       
+    </div>
+</body>
+<asp:ContentPlaceHolder ID="AfterBodySection" runat="server" />
+</html>

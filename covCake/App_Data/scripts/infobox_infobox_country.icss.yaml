@@ -1,0 +1,1688 @@
+--- 
+- infochimps_schema: 
+    name: Infobox Infobox Country
+    collection: All the Wikipedia's Infoboxes
+    fields: 
+    - name: postalCode
+      tags: string lang:en
+      desc: postalCode - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: areaFootnote
+      tags: string lang:en
+      desc: areaFootnote - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Gdp Nominal Per Capita Rank
+      tags: Rank integer string lang:en
+      desc: "Gdp Nominal Per Capita Rank - Multiple types: Number with units  [51 occurrences], Integer [1 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.174342105263158
+      count: 53
+      datatype: Rank integer string
+      uniqid: gdpNominalPerCapitaRank
+    - name: gpiYear
+      tags: integer
+      desc: gpiYear - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Motto
+      tags: string lang:en url wikipedia lang
+      desc: "Motto - Multiple types: String [4 occurrences], Wikpedia link [1 occurrences], lang [motto/lang1 occurrences]"
+      notnull_fraction: 0.0164473684210526
+      count: 5
+      datatype: string link_wp (unknown)
+      uniqid: motto
+    - name: Population Density Sq Mi
+      tags: integer decimal string lang:en
+      desc: "Population Density Sq Mi - Multiple types: Integer [192 occurrences], Decimal [57 occurrences], String [6 occurrences]"
+      notnull_fraction: 0.838815789473684
+      count: 255
+      datatype: integer decimal string
+      uniqid: populationDensitySqMi
+    - name: longew
+      tags: string lang:en
+      desc: longew - String [228 occurrences]
+      notnull_fraction: 0.75
+      datatype: string
+      count: 228
+    - name: Time Zone
+      tags: url wikipedia string lang:en integer ref
+      desc: "Time Zone - Multiple types: Wikpedia link [161 occurrences], String [33 occurrences], Integer [4 occurrences], ref [timeZone/ref1 occurrences]"
+      notnull_fraction: 0.651315789473684
+      count: 198
+      datatype: link_wp string integer (unknown)
+      uniqid: timeZone
+    - name: patronSaint
+      tags: url wikipedia
+      units: url
+      desc: patronSaint - Wikpedia link [12 occurrences]
+      notnull_fraction: 0.0394736842105263
+      datatype: link_wp
+      count: 12
+    - name: Footnote
+      tags: string lang:en url wikipedia url
+      desc: "Footnote - Multiple types: String [201 occurrences], Wikpedia link [85 occurrences], Link to an external site [24 occurrences]"
+      notnull_fraction: 1.01973684210526
+      count: 310
+      datatype: string link_wp link_ext
+      uniqid: footnote
+    - name: otherSymbolType
+      tags: url wikipedia
+      units: url
+      desc: otherSymbolType - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: altSportCode
+      tags: string lang:en
+      desc: altSportCode - String [6 occurrences]
+      notnull_fraction: 0.0197368421052632
+      datatype: string
+      count: 6
+    - name: gemstone
+      tags: url wikipedia
+      units: url
+      desc: gemstone - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: sovereightyNote
+      tags: url wikipedia
+      units: url
+      desc: sovereightyNote - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: Fsi
+      tags: string lang:en integer decimal
+      desc: "Fsi - Multiple types: String [22 occurrences], Integer [3 occurrences], Decimal [2 occurrences]"
+      notnull_fraction: 0.0888157894736842
+      count: 27
+      datatype: string integer decimal
+      uniqid: fsi
+    - name: frMetropole
+      tags: url wikipedia
+      units: url
+      desc: frMetropole - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: frIgnAreaRank
+      tags: Rank
+      units: Rank
+      desc: frIgnAreaRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: fsiYear
+      tags: integer
+      desc: fsiYear - Integer [27 occurrences]
+      notnull_fraction: 0.0888157894736842
+      datatype: integer
+      count: 27
+    - name: Official Languages
+      tags: url wikipedia string lang:en ref ref_label Collapsible_list
+      desc: "Official Languages - Multiple types: Wikpedia link [419 occurrences], String [26 occurrences], ref [officialLanguages/ref1 occurrences], ref_label [officialLanguages/ref_label1 occurrences], Collapsible_list [officialLanguages/Collapsible_list1 occurrences]"
+      notnull_fraction: 1.46381578947368
+      count: 445
+      datatype: link_wp string (unknown) (unknown) (unknown)
+      uniqid: officialLanguages
+    - name: Gdp Nominal Rank
+      tags: Rank string lang:en
+      desc: "Gdp Nominal Rank - Multiple types: Number with units  [53 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.177631578947368
+      count: 54
+      datatype: Rank string
+      uniqid: gdpNominalRank
+    - name: imageCaption
+      tags: string lang:en
+      desc: imageCaption - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: frMetropolePopulation
+      tags: integer
+      desc: frMetropolePopulation - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Population Census Year
+      tags: integer gYearMonth string lang:en url wikipedia date gYear
+      desc: "Population Census Year - Multiple types: Integer [155 occurrences], Yearmonth [9 occurrences], String [5 occurrences], Wikpedia link [1 occurrences], Date [1 occurrences], Year [1 occurrences]"
+      notnull_fraction: 0.565789473684211
+      count: 172
+      datatype: integer gYearMonth string link_wp date gYear
+      uniqid: populationCensusYear
+    - name: majorLanguage
+      tags: url wikipedia
+      units: url
+      desc: majorLanguage - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: airportCode
+      tags: string lang:en
+      desc: airportCode - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: language
+      tags: string lang:en
+      desc: language - String [6 occurrences]
+      notnull_fraction: 0.0197368421052632
+      datatype: string
+      count: 6
+    - name: gnp
+      tags: Dollar
+      units: Dollar
+      desc: gnp - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Dollar
+      count: 1
+    - name: exports2006
+      tags: string lang:en
+      desc: exports2006 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Accessioneudate
+      tags: date string lang:en
+      desc: "Accessioneudate - Multiple types: Date [28 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.0953947368421053
+      count: 29
+      datatype: date string
+      uniqid: accessioneudate
+    - name: Gdp Nominal
+      tags: Dollar string lang:en url
+      desc: "Gdp Nominal - Multiple types: Number with units  [43 occurrences], String [12 occurrences], Link to an external site [2 occurrences]"
+      notnull_fraction: 0.1875
+      count: 57
+      datatype: Dollar string link_ext
+      uniqid: gdpNominal
+    - name: Languages Type
+      tags: string lang:en url wikipedia
+      desc: "Languages Type - Multiple types: String [2 occurrences], Wikpedia link [1 occurrences]"
+      notnull_fraction: 0.00986842105263158
+      count: 3
+      datatype: string link_wp
+      uniqid: languagesType
+    - name: Footnote1
+      tags: coor_dm lang
+      desc: "Footnote1 - Multiple types: coor_dm [footnote1/coor_dm1 occurrences], lang [footnote1/lang2 occurrences]"
+      notnull_fraction: 0.0
+      count: 0
+      datatype: (unknown) (unknown)
+      uniqid: footnote1
+    - name: officialReligion
+      tags: url wikipedia
+      units: url
+      desc: officialReligion - Wikpedia link [3 occurrences]
+      notnull_fraction: 0.00986842105263158
+      datatype: link_wp
+      count: 3
+    - name: de
+      tags: decimal
+      desc: de - Decimal [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: decimal
+      count: 1
+    - name: areaLowestPoint
+      tags: string lang:en
+      desc: areaLowestPoint - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: frTotalPopulationEstimate
+      tags: integer
+      desc: frTotalPopulationEstimate - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Footnote2
+      tags: PDFlink coor_dm unit_sqkm
+      desc: "Footnote2 - Multiple types: PDFlink [footnote2/PDFlink1 occurrences], coor_dm [footnote2/coor_dm1 occurrences], unit_sqkm [footnote2/unit_sqkm1 occurrences]"
+      notnull_fraction: 0.0
+      count: 0
+      datatype: (unknown) (unknown) (unknown)
+      uniqid: footnote2
+    - name: Area Rank
+      tags: Rank string lang:en integer url wikipedia
+      desc: "Area Rank - Multiple types: Number with units  [212 occurrences], String [16 occurrences], Integer [3 occurrences], Wikpedia link [2 occurrences]"
+      notnull_fraction: 0.766447368421053
+      count: 233
+      datatype: Rank string integer link_wp
+      uniqid: areaRank
+    - name: Footnotes
+      tags: string lang:en url wikipedia note_label3 resize note_label1 note_label2 PDFlink note_label4 lang unit_sqkm1 convert note_label unit_sqkm
+      desc: "Footnotes - Multiple types: String [51 occurrences], Wikpedia link [10 occurrences], note_label3 [footnotes/note_label31 occurrences], resize [footnotes/resize1 occurrences], note_label1 [footnotes/note_label11 occurrences], note_label2 [footnotes/note_label21 occurrences], PDFlink [footnotes/PDFlink1 occurrences], note_label4 [footnotes/note_label41 occurrences], lang [footnotes/lang1 occurrences], unit_sqkm1 [footnotes/unit_sqkm11 occurrences], convert [footnotes/convert1 occurrences], note_label [footnotes/note_label1 occurrences], unit_sqkm [footnotes/unit_sqkm1 occurrences]"
+      notnull_fraction: 0.200657894736842
+      count: 61
+      datatype: string link_wp (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown)
+      uniqid: footnotes
+    - name: iso31661Num
+      tags: integer
+      desc: iso31661Num - Integer [4 occurrences]
+      notnull_fraction: 0.0131578947368421
+      datatype: integer
+      count: 4
+    - name: stateReligion
+      tags: url wikipedia
+      units: url
+      desc: stateReligion - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: largestSettlementType
+      tags: string lang:en
+      desc: largestSettlementType - String [9 occurrences]
+      notnull_fraction: 0.0296052631578947
+      datatype: string
+      count: 9
+    - name: footnote3
+      tags: coor_dm
+      desc: footnote3 - coor_dm [footnote3/coor_dm1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: width
+      tags: string lang:en
+      desc: width - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: leaderName1
+      tags: lang
+      desc: leaderName1 - lang [leaderName1/lang1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: populationInfantmortalityRate
+      tags: string lang:en
+      desc: populationInfantmortalityRate - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: footnote4
+      tags: abbr
+      desc: footnote4 - abbr [footnote4/abbr1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: leaderName2
+      tags: lang
+      desc: leaderName2 - lang [leaderName2/lang1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: footnote5
+      tags: External_Timeline
+      desc: footnote5 - External_Timeline [footnote5/External_Timeline1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: pnbRank
+      tags: Rank
+      units: Rank
+      desc: pnbRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: Gini
+      tags: decimal integer string lang:en
+      desc: "Gini - Multiple types: Decimal [81 occurrences], Integer [22 occurrences], String [3 occurrences]"
+      notnull_fraction: 0.348684210526316
+      count: 106
+      datatype: decimal integer string
+      uniqid: gini
+    - name: Area Km
+      tags: integer decimal string lang:en
+      desc: "Area Km - Multiple types: Integer [264 occurrences], Decimal [18 occurrences], String [5 occurrences]"
+      notnull_fraction: 0.944078947368421
+      count: 287
+      datatype: integer decimal string
+      uniqid: areaKm
+    - name: Symbol Type
+      tags: string lang:en url wikipedia
+      desc: "Symbol Type - Multiple types: String [66 occurrences], Wikpedia link [1 occurrences]"
+      notnull_fraction: 0.220394736842105
+      count: 67
+      datatype: string link_wp
+      uniqid: symbolType
+    - name: leaderName3
+      tags: lang
+      desc: leaderName3 - lang [leaderName3/lang1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: Demonym
+      tags: string lang:en url wikipedia
+      desc: "Demonym - Multiple types: String [166 occurrences], Wikpedia link [40 occurrences]"
+      notnull_fraction: 0.677631578947368
+      count: 206
+      datatype: string link_wp
+      uniqid: demonym
+    - name: symbolTypeArticle
+      tags: string lang:en
+      desc: symbolTypeArticle - String [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: string
+      count: 2
+    - name: Established Date
+      tags: date string lang:en integer url wikipedia gYear gYearMonth
+      desc: "Established Date - Multiple types: Date [320 occurrences], String [75 occurrences], Integer [57 occurrences], Wikpedia link [38 occurrences], Year [16 occurrences], Yearmonth [2 occurrences]"
+      notnull_fraction: 1.67105263157895
+      count: 508
+      datatype: date string integer link_wp gYear gYearMonth
+      uniqid: establishedDate
+    - name: fsiCategory
+      tags: string lang:en
+      desc: fsiCategory - String [27 occurrences]
+      notnull_fraction: 0.0888157894736842
+      datatype: string
+      count: 27
+    - name: gdp
+      tags: string lang:en
+      desc: gdp - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: giniRank
+      tags: Rank
+      units: Rank
+      desc: giniRank - Number with units  [8 occurrences]
+      notnull_fraction: 0.0263157894736842
+      datatype: Rank
+      count: 8
+    - name: largestDistrict
+      tags: string lang:en
+      desc: largestDistrict - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Capital
+      tags: url wikipedia string lang:en url coor_dm1 coor_dm harvnb
+      desc: "Capital - Multiple types: Wikpedia link [271 occurrences], String [32 occurrences], Link to an external site [1 occurrences], coor_dm1 [capital/coor_dm11 occurrences], coor_dm [capital/coor_dm3 occurrences], harvnb [capital/harvnb1 occurrences]"
+      notnull_fraction: 1.0
+      count: 304
+      datatype: link_wp string link_ext (unknown) (unknown) (unknown)
+      uniqid: capital
+    - name: frCadastreAreaMagnitude
+      tags: string lang:en
+      desc: frCadastreAreaMagnitude - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: nationality
+      tags: string lang:en
+      desc: nationality - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: conventionalName
+      tags: url wikipedia
+      units: url
+      desc: conventionalName - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: Gni Per Capita
+      tags: Rank Dollar
+      desc: "Gni Per Capita - Multiple types: Number with units  [1 occurrences], Number with units  [1 occurrences]"
+      notnull_fraction: 0.00657894736842105
+      count: 2
+      datatype: Rank Dollar
+      uniqid: gniPerCapita
+    - name: National Anthem
+      tags: url wikipedia string lang:en ref audio lang lang1 nihongo audio1
+      desc: "National Anthem - Multiple types: Wikpedia link [183 occurrences], String [83 occurrences], ref [nationalAnthem/ref1 occurrences], audio [nationalAnthem/audio1 occurrences], lang [nationalAnthem/lang27 occurrences], lang1 [nationalAnthem/lang13 occurrences], nihongo [nationalAnthem/nihongo1 occurrences], audio1 [nationalAnthem/audio11 occurrences]"
+      notnull_fraction: 0.875
+      count: 266
+      datatype: link_wp string (unknown) (unknown) (unknown) (unknown) (unknown) (unknown)
+      uniqid: nationalAnthem
+    - name: Area Sq Mi
+      tags: integer decimal string lang:en
+      desc: "Area Sq Mi - Multiple types: Integer [235 occurrences], Decimal [34 occurrences], String [5 occurrences]"
+      notnull_fraction: 0.901315789473684
+      count: 274
+      datatype: integer decimal string
+      uniqid: areaSqMi
+    - name: Cctld
+      tags: url wikipedia string lang:en
+      desc: "Cctld - Multiple types: Wikpedia link [238 occurrences], String [36 occurrences]"
+      notnull_fraction: 0.901315789473684
+      count: 274
+      datatype: link_wp string
+      uniqid: cctld
+    - name: dn
+      tags: decimal
+      desc: dn - Decimal [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: decimal
+      count: 1
+    - name: Ethnic Groups
+      tags: url wikipedia Percent string lang:en
+      desc: "Ethnic Groups - Multiple types: Wikpedia link [9 occurrences], Number with units  [5 occurrences], String [3 occurrences]"
+      notnull_fraction: 0.0559210526315789
+      count: 17
+      datatype: link_wp Percent string
+      uniqid: ethnicGroups
+    - name: officialExchangeRate
+      tags: string lang:en
+      desc: officialExchangeRate - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: populationBlank1Title
+      tags: string lang:en
+      desc: populationBlank1Title - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: nationalLanguage
+      tags: url wikipedia
+      units: url
+      desc: nationalLanguage - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: denomyn
+      tags: url wikipedia
+      units: url
+      desc: denomyn - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: national
+      tags: url wikipedia
+      units: url
+      desc: national - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: giniCategory
+      tags: string lang:en
+      desc: giniCategory - String [101 occurrences]
+      notnull_fraction: 0.332236842105263
+      datatype: string
+      count: 101
+    - name: Gdp Ppp Per Capita Rank
+      tags: Rank string lang:en integer
+      desc: "Gdp Ppp Per Capita Rank - Multiple types: Number with units  [179 occurrences], String [27 occurrences], Integer [5 occurrences]"
+      notnull_fraction: 0.694078947368421
+      count: 211
+      datatype: Rank string integer
+      uniqid: gdpPppPerCapitaRank
+    - name: currencyCode
+      tags: string lang:en
+      desc: currencyCode - String [273 occurrences]
+      notnull_fraction: 0.898026315789474
+      datatype: string
+      count: 273
+    - name: Government Type
+      tags: url wikipedia string lang:en
+      desc: "Government Type - Multiple types: Wikpedia link [309 occurrences], String [21 occurrences]"
+      notnull_fraction: 1.08552631578947
+      count: 330
+      datatype: link_wp string
+      uniqid: governmentType
+    - name: primeMinister
+      tags: string lang:en
+      desc: primeMinister - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: otherCities
+      tags: url wikipedia
+      units: url
+      desc: otherCities - Wikpedia link [5 occurrences]
+      notnull_fraction: 0.0164473684210526
+      datatype: link_wp
+      count: 5
+    - name: name
+      tags: string lang:en
+      desc: name - String [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: string
+      count: 2
+    - name: flagCaption
+      tags: string lang:en
+      desc: flagCaption - String [6 occurrences]
+      notnull_fraction: 0.0197368421052632
+      datatype: string
+      count: 6
+    - name: Other Languages
+      tags: url wikipedia string lang:en
+      desc: "Other Languages - Multiple types: Wikpedia link [2 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.00986842105263158
+      count: 3
+      datatype: link_wp string
+      uniqid: otherLanguages
+    - name: Established Event
+      tags: string lang:en url wikipedia
+      desc: "Established Event - Multiple types: String [284 occurrences], Wikpedia link [202 occurrences]"
+      notnull_fraction: 1.59868421052632
+      count: 486
+      datatype: string link_wp
+      uniqid: establishedEvent
+    - name: National Motto
+      tags: string lang:en url wikipedia url ref_label lang lang1
+      desc: "National Motto - Multiple types: String [166 occurrences], Wikpedia link [4 occurrences], Link to an external site [2 occurrences], ref_label [nationalMotto/ref_label1 occurrences], lang [nationalMotto/lang21 occurrences], lang1 [nationalMotto/lang13 occurrences]"
+      notnull_fraction: 0.565789473684211
+      count: 172
+      datatype: string link_wp link_ext (unknown) (unknown) (unknown)
+      uniqid: nationalMotto
+    - name: Longd
+      tags: integer decimal
+      desc: "Longd - Multiple types: Integer [227 occurrences], Decimal [1 occurrences]"
+      notnull_fraction: 0.75
+      count: 228
+      datatype: integer decimal
+      uniqid: longd
+    - name: aircraftCode
+      tags: string lang:en
+      desc: aircraftCode - String [5 occurrences]
+      notnull_fraction: 0.0164473684210526
+      datatype: string
+      count: 5
+    - name: areaTotal
+      tags: integer
+      desc: areaTotal - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Gdp Ppp
+      tags: Dollar string lang:en url wikipedia url Pound
+      desc: "Gdp Ppp - Multiple types: Number with units  [177 occurrences], String [29 occurrences], Wikpedia link [8 occurrences], Link to an external site [4 occurrences], Number with units  [1 occurrences]"
+      notnull_fraction: 0.720394736842105
+      count: 219
+      datatype: Dollar string link_wp link_ext Pound
+      uniqid: gdpPpp
+    - name: gpi
+      tags: decimal
+      desc: gpi - Decimal [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: decimal
+      count: 1
+    - name: Utc Offset Dst
+      tags: integer string lang:en url wikipedia
+      desc: "Utc Offset Dst - Multiple types: Integer [155 occurrences], String [12 occurrences], Wikpedia link [2 occurrences]"
+      notnull_fraction: 0.555921052631579
+      count: 169
+      datatype: integer string link_wp
+      uniqid: utcOffsetDst
+    - name: iso31662
+      tags: url wikipedia
+      units: url
+      desc: iso31662 - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: Image Coat
+      tags: url string lang:en
+      desc: "Image Coat - Multiple types: Link to an external site [257 occurrences], String [11 occurrences]"
+      notnull_fraction: 0.881578947368421
+      count: 268
+      datatype: link_ext string
+      uniqid: imageCoat
+    - name: nationalBird
+      tags: url wikipedia
+      units: url
+      desc: nationalBird - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: Population Estimate Year
+      tags: integer gYearMonth string lang:en gYear date
+      desc: "Population Estimate Year - Multiple types: Integer [122 occurrences], Yearmonth [98 occurrences], String [26 occurrences], Year [2 occurrences], Date [1 occurrences]"
+      notnull_fraction: 0.819078947368421
+      count: 249
+      datatype: integer gYearMonth string gYear date
+      uniqid: populationEstimateYear
+    - name: frIgnAreaKm
+      tags: integer
+      desc: frIgnAreaKm - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: areami_percent_C2_percent_B
+      tags: integer
+      desc: areami_percent_C2_percent_B - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: frTotalPopulationEstimateYear
+      tags: string lang:en
+      desc: frTotalPopulationEstimateYear - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Native Name
+      tags: string lang:en url wikipedia lang3 lang1 transl lang2 resize lang4 lang resize1 resize2 rtl-lang
+      desc: "Native Name - Multiple types: String [274 occurrences], Wikpedia link [1 occurrences], lang3 [nativeName/lang31 occurrences], lang1 [nativeName/lang110 occurrences], transl [nativeName/transl3 occurrences], lang2 [nativeName/lang21 occurrences], resize [nativeName/resize2 occurrences], lang4 [nativeName/lang41 occurrences], lang [nativeName/lang37 occurrences], resize1 [nativeName/resize12 occurrences], resize2 [nativeName/resize21 occurrences], rtl-lang [nativeName/rtl-lang5 occurrences]"
+      notnull_fraction: 0.904605263157895
+      count: 275
+      datatype: string link_wp (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown) (unknown)
+      uniqid: nativeName
+    - name: dstNote
+      tags: string lang:en
+      desc: dstNote - String [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: string
+      count: 2
+    - name: Population Density Km
+      tags: integer decimal string lang:en
+      desc: "Population Density Km - Multiple types: Integer [206 occurrences], Decimal [54 occurrences], String [7 occurrences]"
+      notnull_fraction: 0.878289473684211
+      count: 267
+      datatype: integer decimal string
+      uniqid: populationDensityKm
+    - name: Leader Name
+      tags: url wikipedia string lang:en url
+      desc: "Leader Name - Multiple types: Wikpedia link [606 occurrences], String [31 occurrences], Link to an external site [1 occurrences]"
+      notnull_fraction: 2.09868421052632
+      count: 638
+      datatype: link_wp string link_ext
+      uniqid: leaderName
+    - name: unofficialLanguages
+      tags: url wikipedia
+      units: url
+      desc: unofficialLanguages - Wikpedia link [3 occurrences]
+      notnull_fraction: 0.00986842105263158
+      datatype: link_wp
+      count: 3
+    - name: religon
+      tags: string lang:en
+      desc: religon - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: populationBirthRate
+      tags: string lang:en
+      desc: populationBirthRate - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: imageSymbol
+      tags: url
+      units: url
+      desc: imageSymbol - Link to an external site [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_ext
+      count: 1
+    - name: hpiYear
+      tags: integer
+      desc: hpiYear - Integer [3 occurrences]
+      notnull_fraction: 0.00986842105263158
+      datatype: integer
+      count: 3
+    - name: areaHighestPoint
+      tags: string lang:en
+      desc: areaHighestPoint - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: gdpYear
+      tags: integer
+      desc: gdpYear - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Gdp Nominal Year
+      tags: integer string lang:en
+      desc: "Gdp Nominal Year - Multiple types: Integer [55 occurrences], String [4 occurrences]"
+      notnull_fraction: 0.194078947368421
+      count: 59
+      datatype: integer string
+      uniqid: gdpNominalYear
+    - name: Calling Code
+      tags: integer string lang:en url wikipedia
+      desc: "Calling Code - Multiple types: Integer [225 occurrences], String [35 occurrences], Wikpedia link [1 occurrences]"
+      notnull_fraction: 0.858552631578947
+      count: 261
+      datatype: integer string link_wp
+      uniqid: callingCode
+    - name: iso3166_percent_E2_percent_80_percent_931Numeric
+      tags: integer
+      desc: iso3166_percent_E2_percent_80_percent_931Numeric - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: imports2006
+      tags: string lang:en
+      desc: imports2006 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: populationBlank
+      tags: string lang:en
+      desc: populationBlank - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Longm
+      tags: integer decimal
+      desc: "Longm - Multiple types: Integer [219 occurrences], Decimal [8 occurrences]"
+      notnull_fraction: 0.746710526315789
+      count: 227
+      datatype: integer decimal
+      uniqid: longm
+    - name: Population Census
+      tags: integer string lang:en
+      desc: "Population Census - Multiple types: Integer [158 occurrences], String [15 occurrences]"
+      notnull_fraction: 0.569078947368421
+      count: 173
+      datatype: integer string
+      uniqid: populationCensus
+    - name: Latd
+      tags: integer decimal
+      desc: "Latd - Multiple types: Integer [227 occurrences], Decimal [1 occurrences]"
+      notnull_fraction: 0.75
+      count: 228
+      datatype: integer decimal
+      uniqid: latd
+    - name: iso31661Alpha
+      tags: string lang:en
+      desc: iso31661Alpha - String [33 occurrences]
+      notnull_fraction: 0.108552631578947
+      datatype: string
+      count: 33
+    - name: establishedEvent10
+      tags: url wikipedia
+      units: url
+      desc: establishedEvent10 - Wikpedia link [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: link_wp
+      count: 2
+    - name: Hdi
+      tags: decimal string lang:en
+      desc: "Hdi - Multiple types: Decimal [180 occurrences], String [31 occurrences]"
+      notnull_fraction: 0.694078947368421
+      count: 211
+      datatype: decimal string
+      uniqid: hdi
+    - name: areaMagnitude
+      tags: string lang:en
+      desc: areaMagnitude - String [236 occurrences]
+      notnull_fraction: 0.776315789473684
+      datatype: string
+      count: 236
+    - name: iso3166_percent_E2_percent_80_percent_931Alpha
+      tags: string lang:en
+      desc: iso3166_percent_E2_percent_80_percent_931Alpha - String [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: string
+      count: 2
+    - name: Religion
+      tags: url wikipedia string lang:en
+      desc: "Religion - Multiple types: Wikpedia link [5 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.0197368421052632
+      count: 6
+      datatype: link_wp string
+      uniqid: religion
+    - name: Population Estimate Rank
+      tags: Rank string lang:en integer
+      desc: "Population Estimate Rank - Multiple types: Number with units  [191 occurrences], String [33 occurrences], Integer [8 occurrences]"
+      notnull_fraction: 0.763157894736842
+      count: 232
+      datatype: Rank string integer
+      uniqid: populationEstimateRank
+    - name: exchangeRate
+      tags: string lang:en
+      desc: exchangeRate - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: waterArea
+      tags: integer
+      desc: waterArea - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: latns
+      tags: string lang:en
+      desc: latns - String [228 occurrences]
+      notnull_fraction: 0.75
+      datatype: string
+      count: 228
+    - name: nativeShit
+      tags: lang
+      desc: nativeShit - lang [nativeShit/lang1 occurrences]
+      notnull_fraction: 0.0
+      datatype: (unknown)
+      count: 0
+    - name: frTotalPopulationEstimateRank
+      tags: Rank
+      units: Rank
+      desc: frTotalPopulationEstimateRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: usualLanguages
+      tags: url wikipedia
+      units: url
+      desc: usualLanguages - Wikpedia link [5 occurrences]
+      notnull_fraction: 0.0164473684210526
+      datatype: link_wp
+      count: 5
+    - name: symbolWidth
+      tags: string lang:en
+      desc: symbolWidth - String [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: string
+      count: 2
+    - name: Ethnic Groups Year
+      tags: integer string lang:en
+      desc: "Ethnic Groups Year - Multiple types: Integer [4 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.0164473684210526
+      count: 5
+      datatype: integer string
+      uniqid: ethnicGroupsYear
+    - name: mainReligion
+      tags: url wikipedia
+      units: url
+      desc: mainReligion - Wikpedia link [3 occurrences]
+      notnull_fraction: 0.00986842105263158
+      datatype: link_wp
+      count: 3
+    - name: Gdp Ppp Year
+      tags: integer string lang:en gYear
+      desc: "Gdp Ppp Year - Multiple types: Integer [206 occurrences], String [6 occurrences], Year [3 occurrences]"
+      notnull_fraction: 0.707236842105263
+      count: 215
+      datatype: integer string gYear
+      uniqid: gdpPppYear
+    - name: hpiRank
+      tags: Rank
+      units: Rank
+      desc: hpiRank - Number with units  [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: Rank
+      count: 2
+    - name: hpiCategory
+      tags: string lang:en
+      desc: hpiCategory - String [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: string
+      count: 2
+    - name: Image Map
+      tags: url string lang:en
+      desc: "Image Map - Multiple types: Link to an external site [306 occurrences], String [6 occurrences]"
+      notnull_fraction: 1.02631578947368
+      count: 312
+      datatype: link_ext string
+      uniqid: imageMap
+    - name: Longs
+      tags: integer decimal
+      desc: "Longs - Multiple types: Integer [3 occurrences], Decimal [1 occurrences]"
+      notnull_fraction: 0.0131578947368421
+      count: 4
+      datatype: integer decimal
+      uniqid: longs
+    - name: gdpRank
+      tags: Rank
+      units: Rank
+      desc: gdpRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: nationalPlant
+      tags: url wikipedia
+      units: url
+      desc: nationalPlant - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: areaWaterSqMi
+      tags: integer
+      desc: areaWaterSqMi - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: localName
+      tags: string lang:en
+      desc: localName - String [3 occurrences]
+      notnull_fraction: 0.00986842105263158
+      datatype: string
+      count: 3
+    - name: Country Code
+      tags: string lang:en url wikipedia integer
+      desc: "Country Code - Multiple types: String [59 occurrences], Wikpedia link [5 occurrences], Integer [2 occurrences]"
+      notnull_fraction: 0.217105263157895
+      count: 66
+      datatype: string link_wp integer
+      uniqid: countryCode
+    - name: Regional Languages
+      tags: url wikipedia string lang:en
+      desc: "Regional Languages - Multiple types: Wikpedia link [64 occurrences], String [2 occurrences]"
+      notnull_fraction: 0.217105263157895
+      count: 66
+      datatype: link_wp string
+      uniqid: regionalLanguages
+    - name: populationDensitymi_percent_C2_percent_B
+      tags: integer
+      desc: populationDensitymi_percent_C2_percent_B - Integer [2 occurrences]
+      notnull_fraction: 0.00657894736842105
+      datatype: integer
+      count: 2
+    - name: commonName
+      tags: string lang:en
+      desc: commonName - String [296 occurrences]
+      notnull_fraction: 0.973684210526316
+      datatype: string
+      count: 296
+    - name: popPercent
+      tags: Percent
+      units: Percent
+      desc: popPercent - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Percent
+      count: 1
+    - name: otherSymbol
+      tags: url wikipedia
+      units: url
+      desc: otherSymbol - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: frIgnAreaMagnitude
+      tags: string lang:en
+      desc: frIgnAreaMagnitude - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: nationalFlower
+      tags: url
+      units: url
+      desc: nationalFlower - Link to an external site [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_ext
+      count: 1
+    - name: isbnCode
+      tags: string lang:en
+      desc: isbnCode - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: nationalTree
+      tags: url wikipedia
+      units: url
+      desc: nationalTree - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: sportCode
+      tags: string lang:en
+      desc: sportCode - String [10 occurrences]
+      notnull_fraction: 0.0328947368421053
+      datatype: string
+      count: 10
+    - name: capitalType
+      tags: string lang:en
+      desc: capitalType - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: gpiRank
+      tags: Rank
+      units: Rank
+      desc: gpiRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: Time Zone Dst
+      tags: string lang:en url wikipedia ref
+      desc: "Time Zone Dst - Multiple types: String [94 occurrences], Wikpedia link [67 occurrences], ref [timeZoneDst/ref1 occurrences]"
+      notnull_fraction: 0.529605263157895
+      count: 161
+      datatype: string link_wp (unknown)
+      uniqid: timeZoneDst
+    - name: Image Flag
+      tags: url string lang:en
+      desc: "Image Flag - Multiple types: Link to an external site [276 occurrences], String [13 occurrences]"
+      notnull_fraction: 0.950657894736842
+      count: 289
+      datatype: link_ext string
+      uniqid: imageFlag
+    - name: Gini Year
+      tags: integer string lang:en
+      desc: "Gini Year - Multiple types: Integer [97 occurrences], String [8 occurrences]"
+      notnull_fraction: 0.345394736842105
+      count: 105
+      datatype: integer string
+      uniqid: giniYear
+    - name: denonym
+      tags: string lang:en
+      desc: denonym - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: linkingName
+      tags: string lang:en
+      desc: linkingName - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Latm
+      tags: integer decimal string lang:en
+      desc: "Latm - Multiple types: Integer [220 occurrences], Decimal [6 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.746710526315789
+      count: 227
+      datatype: integer decimal string
+      uniqid: latm
+    - name: mainLanguages
+      tags: url wikipedia
+      units: url
+      desc: mainLanguages - Wikpedia link [3 occurrences]
+      notnull_fraction: 0.00986842105263158
+      datatype: link_wp
+      count: 3
+    - name: happyPlanetIndex
+      tags: string lang:en
+      desc: happyPlanetIndex - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: continent
+      tags: string lang:en
+      desc: continent - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Population Estimate
+      tags: integer string lang:en
+      desc: "Population Estimate - Multiple types: Integer [212 occurrences], String [55 occurrences]"
+      notnull_fraction: 0.878289473684211
+      count: 267
+      datatype: integer string
+      uniqid: populationEstimate
+    - name: populationDensitymi
+      tags: integer
+      desc: populationDensitymi - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Largest City
+      tags: string lang:en url wikipedia coor_dm
+      desc: "Largest City - Multiple types: String [174 occurrences], Wikpedia link [76 occurrences], coor_dm [largestCity/coor_dm1 occurrences]"
+      notnull_fraction: 0.822368421052632
+      count: 250
+      datatype: string link_wp (unknown)
+      uniqid: largestCity
+    - name: Gdp Ppp Rank
+      tags: Rank string lang:en integer
+      desc: "Gdp Ppp Rank - Multiple types: Number with units  [187 occurrences], String [20 occurrences], Integer [4 occurrences]"
+      notnull_fraction: 0.694078947368421
+      count: 211
+      datatype: Rank string integer
+      uniqid: gdpPppRank
+    - name: nationalPoet
+      tags: url wikipedia
+      units: url
+      desc: nationalPoet - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: giniCoefficient
+      tags: integer
+      desc: giniCoefficient - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: frIgnAreaSqMi
+      tags: integer
+      desc: frIgnAreaSqMi - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: frCadastreAreaKm
+      tags: integer
+      desc: frCadastreAreaKm - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: flagBorder
+      tags: url
+      units: url
+      desc: flagBorder - Link to an external site [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_ext
+      count: 1
+    - name: Lats
+      tags: integer decimal
+      desc: "Lats - Multiple types: Integer [4 occurrences], Decimal [1 occurrences]"
+      notnull_fraction: 0.0164473684210526
+      count: 5
+      datatype: integer decimal
+      uniqid: lats
+    - name: namazigheName
+      tags: string lang:en
+      desc: namazigheName - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Gdp Ppp Per Capita
+      tags: Dollar string lang:en integer url wikipedia url
+      desc: "Gdp Ppp Per Capita - Multiple types: Number with units  [172 occurrences], String [37 occurrences], Integer [3 occurrences], Wikpedia link [2 occurrences], Link to an external site [2 occurrences]"
+      notnull_fraction: 0.710526315789474
+      count: 216
+      datatype: Dollar string integer link_wp link_ext
+      uniqid: gdpPppPerCapita
+    - name: Utc Offset
+      tags: integer string lang:en url wikipedia
+      desc: "Utc Offset - Multiple types: Integer [235 occurrences], String [20 occurrences], Wikpedia link [3 occurrences]"
+      notnull_fraction: 0.848684210526316
+      count: 258
+      datatype: integer string link_wp
+      uniqid: utcOffset
+    - name: Hpi
+      tags: decimal Rank
+      desc: "Hpi - Multiple types: Decimal [2 occurrences], Number with units  [1 occurrences]"
+      notnull_fraction: 0.00986842105263158
+      count: 3
+      datatype: decimal Rank
+      uniqid: hpi
+    - name: Currency
+      tags: url wikipedia string lang:en lang ref_label transl
+      desc: "Currency - Multiple types: Wikpedia link [242 occurrences], String [40 occurrences], lang [currency/lang2 occurrences], ref_label [currency/ref_label1 occurrences], transl [currency/transl1 occurrences]"
+      notnull_fraction: 0.927631578947368
+      count: 282
+      datatype: link_wp string (unknown) (unknown) (unknown)
+      uniqid: currency
+    - name: gnpPerCapita
+      tags: Dollar
+      units: Dollar
+      desc: gnpPerCapita - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Dollar
+      count: 1
+    - name: gdpRealGrowthRate
+      tags: Percent
+      units: Percent
+      desc: gdpRealGrowthRate - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Percent
+      count: 1
+    - name: Leader Title
+      tags: url wikipedia string lang:en
+      desc: "Leader Title - Multiple types: Wikpedia link [557 occurrences], String [64 occurrences]"
+      notnull_fraction: 2.04276315789474
+      count: 621
+      datatype: link_wp string
+      uniqid: leaderTitle
+    - name: frCadastreAreaRank
+      tags: Rank
+      units: Rank
+      desc: frCadastreAreaRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: Royal Anthem
+      tags: url wikipedia string lang:en lang
+      desc: "Royal Anthem - Multiple types: Wikpedia link [12 occurrences], String [1 occurrences], lang [royalAnthem/lang1 occurrences]"
+      notnull_fraction: 0.0427631578947368
+      count: 13
+      datatype: link_wp string (unknown)
+      uniqid: royalAnthem
+    - name: place
+      tags: url wikipedia
+      units: url
+      desc: place - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: gdpNomiman
+      tags: Dollar
+      units: Dollar
+      desc: gdpNomiman - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Dollar
+      count: 1
+    - name: Percent Water
+      tags: decimal string lang:en integer Percent ref_label
+      desc: "Percent Water - Multiple types: Decimal [112 occurrences], String [75 occurrences], Integer [37 occurrences], Number with units  [16 occurrences], ref_label [percentWater/ref_label1 occurrences]"
+      notnull_fraction: 0.789473684210526
+      count: 240
+      datatype: decimal string integer Percent (unknown)
+      uniqid: percentWater
+    - name: populationDensity
+      tags: integer
+      desc: populationDensity - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: leaderName10
+      tags: string lang:en
+      desc: leaderName10 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Hdi Year
+      tags: integer string lang:en
+      desc: "Hdi Year - Multiple types: Integer [200 occurrences], String [12 occurrences]"
+      notnull_fraction: 0.697368421052632
+      count: 212
+      datatype: integer string
+      uniqid: hdiYear
+    - name: leaderName11
+      tags: string lang:en
+      desc: leaderName11 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Fr Foot
+      tags: url wikipedia string lang:en
+      desc: "Fr Foot - Multiple types: Wikpedia link [2 occurrences], String [2 occurrences]"
+      notnull_fraction: 0.0131578947368421
+      count: 4
+      datatype: link_wp string
+      uniqid: frFoot
+    - name: frMetropolePopulationEstimateRank
+      tags: Rank
+      units: Rank
+      desc: frMetropolePopulationEstimateRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: leaderName12
+      tags: string lang:en
+      desc: leaderName12 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: gpiCategory
+      tags: string lang:en
+      desc: gpiCategory - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: pibRank
+      tags: Rank
+      units: Rank
+      desc: pibRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: leaderName13
+      tags: string lang:en
+      desc: leaderName13 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: grossntnlhappinessRank
+      tags: Rank
+      units: Rank
+      desc: grossntnlhappinessRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: leaderName14
+      tags: string lang:en
+      desc: leaderName14 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Sovereignty Note
+      tags: url wikipedia string lang:en integer date url gYear
+      desc: "Sovereignty Note - Multiple types: Wikpedia link [126 occurrences], String [19 occurrences], Integer [6 occurrences], Date [3 occurrences], Link to an external site [1 occurrences], Year [1 occurrences]"
+      notnull_fraction: 0.513157894736842
+      count: 156
+      datatype: link_wp string integer date link_ext gYear
+      uniqid: sovereigntyNote
+    - name: conventionalShortName
+      tags: string lang:en
+      desc: conventionalShortName - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: imageCoatCaption
+      tags: string lang:en
+      desc: imageCoatCaption - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: leaderName15
+      tags: string lang:en
+      desc: leaderName15 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Iso31661 Numeric
+      tags: integer string lang:en
+      desc: "Iso31661 Numeric - Multiple types: Integer [9 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.0328947368421053
+      count: 10
+      datatype: integer string
+      uniqid: iso31661Numeric
+    - name: vehicleCode
+      tags: string lang:en
+      desc: vehicleCode - String [16 occurrences]
+      notnull_fraction: 0.0526315789473684
+      datatype: string
+      count: 16
+    - name: areaPercent
+      tags: Percent
+      units: Percent
+      desc: areaPercent - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Percent
+      count: 1
+    - name: landAreaRank
+      tags: Rank
+      units: Rank
+      desc: landAreaRank - Number with units  [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: Rank
+      count: 1
+    - name: Population Density Rank
+      tags: Rank string lang:en integer
+      desc: "Population Density Rank - Multiple types: Number with units  [201 occurrences], String [37 occurrences], Integer [7 occurrences]"
+      notnull_fraction: 0.805921052631579
+      count: 245
+      datatype: Rank string integer
+      uniqid: populationDensityRank
+    - name: percentReligion
+      tags: integer
+      desc: percentReligion - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: leaderName16
+      tags: string lang:en
+      desc: leaderName16 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: maxwidth
+      tags: string lang:en
+      desc: maxwidth - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: populationCensusRank
+      tags: Rank
+      units: Rank
+      desc: populationCensusRank - Number with units  [5 occurrences]
+      notnull_fraction: 0.0164473684210526
+      datatype: Rank
+      count: 5
+    - name: fsiRank
+      tags: Rank
+      units: Rank
+      desc: fsiRank - Number with units  [27 occurrences]
+      notnull_fraction: 0.0888157894736842
+      datatype: Rank
+      count: 27
+    - name: Sovereignty Type
+      tags: url wikipedia string lang:en
+      desc: "Sovereignty Type - Multiple types: Wikpedia link [220 occurrences], String [45 occurrences]"
+      notnull_fraction: 0.871710526315789
+      count: 265
+      datatype: link_wp string
+      uniqid: sovereigntyType
+    - name: Map Caption
+      tags: string lang:en url wikipedia url map_caption
+      desc: "Map Caption - Multiple types: String [33 occurrences], Wikpedia link [13 occurrences], Link to an external site [1 occurrences], map_caption [mapCaption/map_caption36 occurrences]"
+      notnull_fraction: 0.154605263157895
+      count: 47
+      datatype: string link_wp link_ext (unknown)
+      uniqid: mapCaption
+    - name: Calling Code Note
+      tags: string lang:en url wikipedia
+      desc: "Calling Code Note - Multiple types: String [17 occurrences], Wikpedia link [6 occurrences]"
+      notnull_fraction: 0.0756578947368421
+      count: 23
+      datatype: string link_wp
+      uniqid: callingCodeNote
+    - name: leaderName17
+      tags: string lang:en
+      desc: leaderName17 - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: Gdp Nominal Per Capita
+      tags: Dollar string lang:en url
+      desc: "Gdp Nominal Per Capita - Multiple types: Number with units  [48 occurrences], String [6 occurrences], Link to an external site [2 occurrences]"
+      notnull_fraction: 0.184210526315789
+      count: 56
+      datatype: Dollar string link_ext
+      uniqid: gdpNominalPerCapita
+    - name: frCadastreAreaSqMi
+      tags: integer
+      desc: frCadastreAreaSqMi - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: largestSettlement
+      tags: url wikipedia
+      units: url
+      desc: largestSettlement - Wikpedia link [10 occurrences]
+      notnull_fraction: 0.0328947368421053
+      datatype: link_wp
+      count: 10
+    - name: Hdi Rank
+      tags: Rank string lang:en integer
+      desc: "Hdi Rank - Multiple types: Number with units  [170 occurrences], String [35 occurrences], Integer [4 occurrences]"
+      notnull_fraction: 0.6875
+      count: 209
+      datatype: Rank string integer
+      uniqid: hdiRank
+    - name: Anthem
+      tags: url wikipedia string lang:en lang
+      desc: "Anthem - Multiple types: Wikpedia link [2 occurrences], String [1 occurrences], lang [anthem/lang1 occurrences]"
+      notnull_fraction: 0.00986842105263158
+      count: 3
+      datatype: link_wp string (unknown)
+      uniqid: anthem
+    - name: Languages
+      tags: url wikipedia string lang:en
+      desc: "Languages - Multiple types: Wikpedia link [5 occurrences], String [1 occurrences]"
+      notnull_fraction: 0.0197368421052632
+      count: 6
+      datatype: link_wp string
+      uniqid: languages
+    - name: touristInformation
+      tags: url
+      units: url
+      desc: touristInformation - Link to an external site [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_ext
+      count: 1
+    - name: area
+      tags: integer
+      desc: area - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: Conventional Long Name
+      tags: string lang:en ref_label Collapsible_list
+      desc: "Conventional Long Name - Multiple types: String [214 occurrences], ref_label [conventionalLongName/ref_label1 occurrences], Collapsible_list [conventionalLongName/Collapsible_list2 occurrences]"
+      notnull_fraction: 0.703947368421053
+      count: 214
+      datatype: string (unknown) (unknown)
+      uniqid: conventionalLongName
+    - name: gdpPerCapita
+      tags: string lang:en
+      desc: gdpPerCapita - String [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: string
+      count: 1
+    - name: hdiCategory
+      tags: string lang:en
+      desc: hdiCategory - String [213 occurrences]
+      notnull_fraction: 0.700657894736842
+      datatype: string
+      count: 213
+    - name: popDate
+      tags: integer
+      desc: popDate - Integer [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: integer
+      count: 1
+    - name: governmenrwerftype
+      tags: url wikipedia
+      units: url
+      desc: governmenrwerftype - Wikpedia link [1 occurrences]
+      notnull_fraction: 0.00328947368421053
+      datatype: link_wp
+      count: 1
+    - name: euseats
+      tags: integer
+      desc: euseats - Integer [12 occurrences]
+      notnull_fraction: 0.0394736842105263
+      datatype: integer
+      count: 12
+    ratings: 
+      interesting: 
+        rating: 5
+        by: initial
+        desc: ""
+      authoritative: 
+        rating: 2
+        by: initial
+        desc: While there are many anonymous or layperson contributors, the base contents pass before many eyes.
+      comprehensive: 
+        rating: 5
+        by: initial
+        desc: ""
+      accurate: 
+        rating: 2
+        by: initial
+        desc: While the epistemological concerns about wikipedia content are often overstated, there is less editorial control over these tables than most data sources.
+    notes: 
+      usage: |-
+        
+        Formatting errors, evolving implementations for infobox templates, and
+        the nature of user-generated content mean that there are many
+        inconsistencies within infobox groupings.  For example, the same date
+        field may in some cases be populated by a full date string, in others
+        a year, and in others a date-formatting template instance.
+        
+        However, these are still in somewhat rough shape and may have
+        conversion errors.  Please report bugs at
+        http://getsatisfaction.com/infochimps -- and if you are interested in helping
+        to improve these datasets "contact the infochimps":http://help.infochimps.org/help/show/Contact
+        
+        Furthermore, parameters to wikipedia templates can be given positionally
+        or by name.  If there are many fields labelled '1:', '2:', etc you will have
+        to refer to the original Template page on wikipedia to map these fields.
+      interesting_fields: 70
+      shape: "{kind:object, rows:304, cols:233}"
+      rights: |-
+        
+        Information in this dataset is covered by the "Gnu Free
+        Documentation  License.":http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License
+        
+        From http://en.wikipedia.org/wiki/Wikipedia:Copyrights :
+        "Permission is granted to copy, distribute and/or modify this document
+        under the terms of the GNU Free Documentation License, Version 1.2 or
+        any later version published by the Free Software Foundation; with no
+        Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+        Texts.
+        Content on Wikipedia is covered by disclaimers."
+        
+        Please read and understand the "Copyright":http://en.wikipedia.org/wiki/Wikipedia:Copyrights attached to this material,
+        specifically the "Reusers' rights and obligations.":http://en.wikipedia.org/wiki/Wikipedia:Copyrights#Reusers.27_rights_and_obligations
+      disclaimer: |
+        
+        From Wikipedia's "'Wikipedia:Ten things you may not know about
+        Wikipedia':":http://en.wikipedia.org/wiki/Wikipedia:Ten_things_you_may_not_know_about_Wikipedia
+        
+        bq. It is in the nature of an ever-changing work like Wikipedia that,
+            while some articles are of the highest quality of scholarship,
+            others are admittedly complete rubbish. We are fully aware of
+            this. We work hard to keep the ratio of the greatest to the worst
+            as high as possible, of course, and to find helpful ways to tell
+            you in what state an article currently is. Even at its best,
+            Wikipedia is an encyclopedia, with all the limitations that
+            entails. It is not a primary source. We ask you not to criticize
+            Wikipedia indiscriminately for its content model but to use it
+            with an informed understanding of what it is and what it
+            isn't. Also, because some articles may contain errors, please do
+            not use Wikipedia to make critical decisions.
+        
+        More information: http://en.wikipedia.org/wiki/Wikipedia:General_disclaimer 
+
+      help_improve_these_datasets: |
+        * Mine template definitions (the actual implementation on Wikipedia) for better
+          field descriptions and to cull spurious field values
+        
+        * Also, use the template definitions to convert positional-parameters
+          to uniformly named-parameters
+        
+        * Many of these tables are "subclassed" -- for example all of the
+          infobox_olympics_[COUNTRY] templates.  Help identify and unify these
+          subclassed objects
+        
+        * Tag fields with semantic information
+
+      collection_desc: |-
+        
+        Wikipedia's Infoboxes - Wikipedia 
+        
+        The datasets here are generated from intermediate dumpfiles prepared
+        by DBpedia, "a community effort to extract structured information from
+        Wikipedia and to make this information available on the Web."
+    formats: 
+      yaml: {}
+
+    desc: All of the 'Infobox Infobox Country' (infobox_infobox_country) infoboxes from wikipedia.
+    contributors: 
+    - name: wikipedia.org
+      url: http://en.wikipedia.org/wiki/Wikipedia:Database_download
+      desc: |
+        (Taken from "Wikipedia's 'About' page":http://en.wikipedia.org/wiki/Wikipedia:About
+        
+        Wikipedia is a multilingual, Web-based, free content encyclopedia
+        project. The name Wikipedia is a portmanteau (combination) of the
+        words wiki (a type of collaborative website) and
+        encyclopedia. Wikipedia's articles provide links to guide the user
+        to related pages with additional information.
+        
+        Wikipedia is written collaboratively by volunteers from all around
+        the world. Since its creation in 2001, Wikipedia has grown rapidly
+        into one of the largest reference Web sites. There are more than
+        75,000 active contributors working on some 9,000,000 articles in
+        more than 250 languages. As of today, there are 2,293,986 articles
+        in English; every day hundreds of thousands of visitors from around
+        the world make tens of thousands of edits and create thousands of
+        new articles to enhance the knowledge held by the Wikipedia
+        encyclopedia. (See also: Wikipedia:Statistics).
+
+      uniqid: wikipedia.org
+    - name: dbpedia.org
+      url: http://wiki.dbpedia.org/Downloads
+      desc: "DBpedia is a community effort to extract structured information from\n\
+        Wikipedia and to make this information available on the Web. DBpedia\n\
+        allows you to ask sophisticated queries against Wikipedia and to link\n\
+        other datasets on the Web to Wikipedia data.\n\n\
+        DBpedia is an open community project and highly welcomes new contributors.\n\n\
+        The project was started by the following organizations and individuals:\n\n\
+        S\xF6ren Auer, Universit\xE4t Leipzig\n\
+        Chris Bizer, Freie Universit\xE4t Berlin\n\
+        Richard Cyganiak, Freie Universit\xE4t Berlin\n\
+        Orri Erling, OpenLink Software\n\
+        Kingsley Idehen, OpenLink Software\n\
+        Georgi Kobilarov, Freie Universit\xE4t Berlin\n\
+        Jens Lehmann, Universit\xE4t Leipzig\n\
+        J\xF6rg Sch\xFCppel, Universit\xE4t Leipzig\n\n\
+        Thanks a lot for their excellent work on the September 2007 release of the DBpedia dataset to:\n\n\
+        1. Georgi Kobilarov (Freie Universit\xE4t Berlin) who redesigned and improved the extraction framework and implemented many of the interlinking algorithms.\n\
+        2. Piet Hensel (Freie Universit\xE4t Berlin) who improved the infobox extraction code, wrote the unit test suite.\n\
+        3. Richard Cyganiak (Freie Universit\xE4t Berlin) for his advice on redesigning the architecture of the extraction framework and for helping to solve many annoying Unicode and URI problems.\n\
+        4. Zdravko Tashev (OpenLink Software) for his patience to try several times to import buggy versions of the dataset into Virtuoso.\n\
+        5. OpenLink Software altogether for providing the Virtuoso database server that hosts the DBpedia SPARQL endpoint and RDF Data Set.\n\
+        6. S\xF6ren Auer, Jens Lehmann and J\xF6rg Sch\xFCppel (Universit\xE4t Leipzig) for the original version of the infobox extraction code.\n\
+        7. Tom Heath and Peter Coetzee (Open University) for the RDFS version of the YAGO class hirarchy.\n\
+        8. Fabian M. Suchanek, Gjergji Kasneci (Max-Plank-Institut Saarbr\xFCcken) for allowing us to integrate the YAGO classification.\n\
+        9. Christian Becker (Freie Universit\xE4t Berlin) for writing the geo-coordinates and the homepage extractor.\n\
+        10. Hans Butschalowsky (Freie Universit\xE4t Berlin) for the Wikipedia infobox template to Word Net mapping.\n\
+        11. Chris Bizer (Freie Universit\xE4t Berlin) for coordinating the Berlin part of the work and annoying everybody with suggestions and bug reports.\n\
+        12. Ivan Herman, Tim Berners-Lee, Rich Knopman and many others for their bug reports.\n\
+        13. Vijay Alilaghatta for contributing the Wikipedia-Cyc links."
+      uniqid: dbpedia.org
+    coll_uniqid: dbpedia_infoboxen
+    uniqid: infobox_infobox_country
+    tags: infobox infoboxen wikipedia template dbpedia templates country

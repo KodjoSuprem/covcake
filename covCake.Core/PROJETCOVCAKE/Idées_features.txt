@@ -1,0 +1,23 @@
+﻿## Carnet de voyages: circuit + photo
+## Informations sur le pays de destination (météo etc...)
+## conseils pour le départ 
+## possibilité de reservation de billet
+## Envoi de notifications apres XX heures (XX = 2 ?)
+
+##Changement d'email : envoi de lien &nemail=nouvelle_adresse@email.com&actKey=...
+					 : si actkey == actkey on peux changer l'email
+
+
+//Notifications
+
+	Abonnement		: Verification apres 1h : Envoi
+	Desabonnement	: Verification apres 1h : Envoi
+	
+	Message Privé	: Direct				: Envoi
+	
+	
+
+exécutés par un autre processus 
+
+
+Slogan : Partez Groupé

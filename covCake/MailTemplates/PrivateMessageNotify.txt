@@ -1,0 +1,20 @@
+﻿Bonjour  #DISPLAYNAME#,
+
+Vous venez de recevoir un message de la part de #SENDERDISPLAYNAME# #RELATEDTOPROJETSENTENCE#.
+
+------------------------
+sujet: #SUBJECT#
+
+#MESSAGE#
+------------------------
+
+Cliquez sur le lien suivant pour répondre à ce message : 
+#SHOWMESSAGELINK#
+
+Si le lien ne s'affiche pas, copiez l'adresse complete dans votre navigateur.
+
+Cordialement,
+L'équipe de CoVoyage.net
+
+--
+**Ceci est un email automatique, veuillez ne pas y répondre**

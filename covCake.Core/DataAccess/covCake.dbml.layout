@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 18.625, 19.625" name="covCake">
+  <DataContextMoniker Name="/covCakeDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e52f9d3a-fcd0-4eac-bbfa-bccab1978757" absoluteBounds="6.5, 0.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/covCakeDataContext/ref_Pays" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2b17734b-1b0f-4669-872e-9cd54712a346" absoluteBounds="6.515, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c9dd7941-1213-4ab7-8b8a-ceffdf113f1a" absoluteBounds="6.25, 7.75, 2, 1.3862939453124996">
+      <DataClassMoniker Name="/covCakeDataContext/cov_AbonnementProjet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e74abca0-4d64-484a-9bd7-a2194c9e1f14" absoluteBounds="6.265, 8.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1dee36e4-d141-4a82-bf88-3b1020b6afa3" absoluteBounds="3.5, 6.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/covCakeDataContext/cov_Album" />
+      <nestedChildShapes>
+        <elementListCompartment Id="06bd8f2a-7401-428c-8c40-69ef65374f49" absoluteBounds="3.515, 7.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="65f5d485-3141-4834-b9f2-07c7e5540ca0" absoluteBounds="6.25, 17.625, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/covCakeDataContext/cov_Photo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e4fcbee3-9478-4d49-bee3-eb646bad0bda" absoluteBounds="6.265, 18.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="912f3705-da94-444b-b2e0-06d2906f59dd" absoluteBounds="6.5, 4.25, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/covCakeDataContext/cov_Residence" />
+      <nestedChildShapes>
+        <elementListCompartment Id="76e08120-be9a-4e89-9c57-69b9ebe3f930" absoluteBounds="6.515, 4.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c59804ef-c784-4fd6-af12-920838cbf8f8" absoluteBounds="6.25, 10.875, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/covCakeDataContext/cov_UserAlbum" />
+      <nestedChildShapes>
+        <elementListCompartment Id="77a5f19d-bdcd-4625-9d97-c17b6bdb0c1e" absoluteBounds="6.265, 11.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2bed24d3-57da-418d-b8eb-0a03193fbbe9" absoluteBounds="0.75, 8.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/covCakeDataContext/ref_Departement" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d4230984-e867-4c62-95eb-8b4ef89ab123" absoluteBounds="0.765, 9.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3049be60-579b-47f5-aff7-cfb22e0ee564" absoluteBounds="0.75, 11.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/covCakeDataContext/aspnet_User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="13e330b7-b503-477f-933c-4a257b457d4c" absoluteBounds="0.765, 11.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="56e5dc8d-5727-4519-ab6f-49c1c00ee604" absoluteBounds="3.5, 13.75, 2, 4.8477197265625005">
+      <DataClassMoniker Name="/covCakeDataContext/aspnet_Membership" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0a20d002-3aef-481d-bf27-0f238554a72e" absoluteBounds="3.515, 14.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 7.41429768880208); (6 : 7.41429768880208); (6 : 9.25); (6.125 : 9.25); (6.125 : 10.625); (6 : 10.625); (6 : 17.25); (7.25 : 17.25); (7.25 : 17.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_Album/cov_Album_cov_Photo" />
+      <nodes>
+        <classShapeMoniker Id="1dee36e4-d141-4a82-bf88-3b1020b6afa3" />
+        <classShapeMoniker Id="65f5d485-3141-4834-b9f2-07c7e5540ca0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 7.84019853320313); (5.75 : 7.84019853320313); (5.75 : 9.3125); (5.98498899136762 : 9.3125 : JumpStart); (6.15165565803429 : 9.3125 : JumpEnd); (6.1875 : 9.3125); (6.1875 : 10.25); (7.25 : 10.25); (7.25 : 10.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_Album/cov_Album_cov_UserAlbum" />
+      <nodes>
+        <classShapeMoniker Id="1dee36e4-d141-4a82-bf88-3b1020b6afa3" />
+        <classShapeMoniker Id="c59804ef-c784-4fd6-af12-920838cbf8f8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 13.5304996744792); (1.75 : 16.1738598632813); (3.5 : 16.1738598632813)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/aspnet_User/aspnet_User_aspnet_Membership" />
+      <nodes>
+        <classShapeMoniker Id="3049be60-579b-47f5-aff7-cfb22e0ee564" />
+        <classShapeMoniker Id="56e5dc8d-5727-4519-ab6f-49c1c00ee604" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5b9dacb8-b422-43a5-a055-2aa45d2a46f6" absoluteBounds="9.375, 14.375, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/covCakeDataContext/cov_Alerte" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5a75e5a4-3885-41c9-9063-cb41b957689b" absoluteBounds="9.39, 14.835, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.5 : 1.73159912109375); (9.59375 : 1.73159912109375); (9.59375 : 14.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/ref_Pays/ref_Pays_cov_Alerte" />
+      <nodes>
+        <classShapeMoniker Id="e52f9d3a-fcd0-4eac-bbfa-bccab1978757" />
+        <classShapeMoniker Id="5b9dacb8-b422-43a5-a055-2aa45d2a46f6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" absoluteBounds="9.875, 5.25, 2, 4.0785139973958326">
+      <DataClassMoniker Name="/covCakeDataContext/cov_Projet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="35ea16e7-43ca-4a1a-9199-1d544723b0ab" absoluteBounds="9.89, 5.71, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(9.875 : 8.44314697265625); (9.67708333333333 : 8.44314697265625 : JumpStart); (9.51041666666667 : 8.44314697265625 : JumpEnd); (8.25 : 8.44314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_Projet/cov_Projet_cov_AbonnementProjet" />
+      <nodes>
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+        <classShapeMoniker Id="c9dd7941-1213-4ab7-8b8a-ceffdf113f1a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 5.63544840494792); (9.51041666666667 : 5.63544840494792 : JumpStart); (9.67708333333333 : 5.63544840494792 : JumpEnd); (9.875 : 5.63544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_Residence/cov_Residence_cov_Projet" />
+      <nodes>
+        <classShapeMoniker Id="912f3705-da94-444b-b2e0-06d2906f59dd" />
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 2.25365118164063); (9.51041666666667 : 2.25365118164063 : JumpStart); (9.67708333333333 : 2.25365118164063 : JumpEnd); (10.2604141666667 : 2.25365118164063 : JumpStart); (10.4270808333333 : 2.25365118164063 : JumpEnd); (10.875 : 2.25365118164063); (10.875 : 5.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/ref_Pays/ref_Pays_cov_Projet" />
+      <nodes>
+        <classShapeMoniker Id="e52f9d3a-fcd0-4eac-bbfa-bccab1978757" />
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 1.20954706054688); (10.3437475 : 1.20954706054688); (10.3437475 : 5.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/ref_Pays/ref_Pays_cov_Projet1" />
+      <nodes>
+        <classShapeMoniker Id="e52f9d3a-fcd0-4eac-bbfa-bccab1978757" />
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ec945d9e-301c-4f2a-a9f3-0c5a168c87c2" absoluteBounds="16.375, 5.625, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/covCakeDataContext/cov_Transport" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7fa49acc-b9d6-4146-8e17-9d80f72b6b93" absoluteBounds="16.39, 6.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.875 : 6.70274983723958); (16.375 : 6.70274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_Projet/cov_Projet_cov_Transport" />
+      <nodes>
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+        <classShapeMoniker Id="ec945d9e-301c-4f2a-a9f3-0c5a168c87c2" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" absoluteBounds="3.875, 9.5, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/covCakeDataContext/cov_UserProfile" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a6c6b86c-4309-4eb6-b5c2-eca1422e0439" absoluteBounds="3.89, 9.96, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.875 : 9.5); (6.25 : 9.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_UserProfile/cov_UserProfile_cov_AbonnementProjet" />
+      <nodes>
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+        <classShapeMoniker Id="c9dd7941-1213-4ab7-8b8a-ceffdf113f1a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.875 : 11.4719962565104); (6.25 : 11.4719962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_UserProfile/cov_UserProfile_cov_UserAlbum" />
+      <nodes>
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+        <classShapeMoniker Id="c59804ef-c784-4fd6-af12-920838cbf8f8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.875 : 12.2780989583333); (5.91666666666667 : 12.2780989583333 : JumpStart); (6.08333333333333 : 12.2780989583333 : JumpEnd); (9.51041666666667 : 12.2780989583333 : JumpStart); (9.67708333333333 : 12.2780989583333 : JumpEnd); (10.5156275 : 12.2780989583333); (10.5156275 : 14.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_UserProfile/cov_UserProfile_cov_Alerte" />
+      <nodes>
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+        <classShapeMoniker Id="5b9dacb8-b422-43a5-a055-2aa45d2a46f6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.875 : 9.70312625); (6.04166666666667 : 9.70312625 : JumpStart); (6.20833333333333 : 9.70312625 : JumpEnd); (9.51041666666667 : 9.70312625 : JumpStart); (9.67708333333333 : 9.70312625 : JumpEnd); (11.05468625 : 9.70312625); (11.05468625 : 9.32851399739583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_UserProfile/cov_UserProfile_cov_Projet" />
+      <nodes>
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 11.8998527018229); (3.875 : 11.8998527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/aspnet_User/aspnet_User_cov_UserProfile" />
+      <nodes>
+        <classShapeMoniker Id="3049be60-579b-47f5-aff7-cfb22e0ee564" />
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.81814697265625); (3.875 : 9.81814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/ref_Departement/ref_Departement_cov_UserProfile" />
+      <nodes>
+        <classShapeMoniker Id="2bed24d3-57da-418d-b8eb-0a03193fbbe9" />
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="401d7264-ce24-47ce-9fea-6a7f8e759725" absoluteBounds="14.125, 11.75, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/covCakeDataContext/cov_MessagePrive" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9571aae-7ad1-475b-9040-889d8cca887d" absoluteBounds="14.14, 12.21, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.875 : 10.007815625); (6.04166666666667 : 10.007815625 : JumpStart); (6.27083333333333 : 10.007815625 : JumpEnd); (9.51041666666667 : 10.007815625 : JumpStart); (9.67708333333333 : 10.007815625 : JumpEnd); (11.5729166666667 : 10.007815625 : JumpStart); (11.7395833333333 : 10.007815625 : JumpEnd); (15.125 : 10.007815625); (15.125 : 11.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/covCakeDataContext/cov_UserProfile/cov_UserProfile_cov_MessagePrive" />
+      <nodes>
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+        <classShapeMoniker Id="401d7264-ce24-47ce-9fea-6a7f8e759725" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.875 : 10.4375); (6.04166666666667 : 10.4375 : JumpStart); (6.20833333333333 : 10.4375 : JumpEnd); (7.16666666666667 : 10.4375 : JumpStart); (7.33333333333333 : 10.4375 : JumpEnd); (9.51041666666667 : 10.4375 : JumpStart); (9.67708333333333 : 10.4375 : JumpEnd); (11.5729166666667 : 10.4375 : JumpStart); (11.7395833333333 : 10.4375 : JumpEnd); (14.5937475 : 10.4375); (14.5937475 : 11.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/covCakeDataContext/cov_UserProfile/cov_UserProfile_cov_MessagePrive1" />
+      <nodes>
+        <classShapeMoniker Id="596c1a80-d798-4cf7-b71c-668049a6fc8b" />
+        <classShapeMoniker Id="401d7264-ce24-47ce-9fea-6a7f8e759725" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.8342307692308 : 15.6362125651042); (14.8342307692308 : 15.8862125651042); (15.4296153846154 : 15.8862125651042); (15.4296153846154 : 15.6362125651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/covCakeDataContext/cov_MessagePrive/cov_MessagePrive_cov_MessagePrive" />
+      <nodes>
+        <classShapeMoniker Id="401d7264-ce24-47ce-9fea-6a7f8e759725" />
+        <classShapeMoniker Id="401d7264-ce24-47ce-9fea-6a7f8e759725" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.65625 : 9.32851399739583); (11.65625 : 13.2952994791667); (14.125 : 13.2952994791667)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/covCakeDataContext/cov_Projet/cov_Projet_cov_MessagePrive" />
+      <nodes>
+        <classShapeMoniker Id="04cc6e0b-671b-49e4-b6dc-c62a0cde2839" />
+        <classShapeMoniker Id="401d7264-ce24-47ce-9fea-6a7f8e759725" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
